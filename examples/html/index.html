@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AviVet Icons — ejemplo mínimo</title>
+<link rel="stylesheet" href="../../packages/css/avivet-icons.css">
+<style>
+  body { font: 16px/1.6 system-ui, sans-serif; max-width: 40rem; margin: 3rem auto; padding: 0 1.5rem; }
+  h1 { font-size: 1.4rem; }
+  .demo { display: flex; gap: 1.5rem; align-items: center; margin: 1.5rem 0; }
+  .verde  { color: #0F6B4F; }
+  .alerta { color: #B3261E; }
+  .grande { font-size: 3rem; }
+  code { background: #eef1f4; padding: .1em .35em; border-radius: 3px; font-size: .85em; }
+</style>
+</head>
+<body>
+
+<h1>AviVet Icons en HTML plano</h1>
+
+<h2>1 · Vía CSS</h2>
+<p>El icono hereda el <strong>color y el tamaño del texto</strong>: no hay que
+   tocar el SVG para recolorearlo.</p>
+
+<div class="demo">
+  <i class="ai ai-hen"></i>
+  <i class="ai ai-hen verde"></i>
+  <i class="ai ai-hen alerta"></i>
+  <span class="grande"><i class="ai ai-hen"></i></span>
+</div>
+
+<p>En texto corrido se alinea solo:
+   consumo de agua <i class="ai ai-water-drop"></i> de 210 mL/ave/día.</p>
+
+<h2>2 · Vía sprite</h2>
+<p>Un solo archivo para toda la biblioteca. Recuerda <code>fill="none"</code> y
+   <code>stroke="currentColor"</code> al usar <code>&lt;use&gt;</code>.</p>
+
+<div class="demo" style="color:#1D5C8F">
+  <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+    <use href="../../packages/sprite/sprite.svg#ai-nipple-drinker"/>
+  </svg>
+  <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+    <use href="../../packages/sprite/sprite.svg#ai-bell-drinker"/>
+  </svg>
+  <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round">
+    <use href="../../packages/sprite/sprite.svg#ai-vaccine-bottle"/>
+  </svg>
+</div>
+
+<h2>3 · Vía manifest</h2>
+<p>Para construir tus propias herramientas.</p>
+
+<div class="demo" id="desde-json" style="color:#0F6B4F"></div>
+
+<script type="module">
+  const manifest = await fetch('../../packages/json/manifest.json').then((r) => r.json());
+  const salida = document.getElementById('desde-json');
+
+  salida.innerHTML = manifest.icons
+    .filter((icon) => icon.category === 'animals' || icon.id === 'egg')
+    .map((icon) => `<svg width="40" height="40" viewBox="${icon.viewBox}" role="img"
+        fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <title>${icon.name_es}</title>${icon.body}</svg>`)
+    .join('');
+</script>
+
+</body>
+</html>

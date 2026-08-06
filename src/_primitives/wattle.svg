@@ -1,5 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- PIEZA: barbilla. Lobulo colgante bajo el pico, ~6 px.
-       Se omite cuando quedaria a menos de 4 px del trazo del cuello (ver hen). -->
-  <path d="M50 20.5C53 22.5 53.5 26 51.5 27.5C49.5 26 49.5 22.5 50 20.5Z"/>
-</svg>

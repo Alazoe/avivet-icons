@@ -1,16 +1,35 @@
 {
   "name": "avivet-icons",
-  "version": "1.0.0",
-  "description": "Open Source Poultry SVG Library — iconos de dibujo tecnico para produccion avicola",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AviVet Icons — Open Source Poultry Design System",
   "license": "MIT",
   "author": "Andres Lazo",
   "type": "module",
-  "keywords": ["icons", "svg", "poultry", "aviculture", "veterinary", "avivet"],
-  "files": ["src", "sprite", "css", "json", "metadata.json", "DESIGN.md"],
+  "workspaces": [
+    "packages/core",
+    "packages/sprite",
+    "packages/css",
+    "packages/json",
+    "packages/react",
+    "packages/vue"
+  ],
   "scripts": {
-    "validate": "node tools/validate.mjs",
-    "build": "node tools/validate.mjs && node tools/build.mjs",
-    "new": "node tools/new-icon.mjs",
-    "docs": "open docs/index.html"
-  }
+    "build": "node scripts/build.mjs",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "new": "node scripts/new-icon.mjs",
+    "preview": "npm run build && open docs/index.html"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "keywords": [
+    "icons",
+    "svg",
+    "poultry",
+    "aviculture",
+    "veterinary",
+    "design-system",
+    "avivet"
+  ]
 }

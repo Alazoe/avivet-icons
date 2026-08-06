@@ -1,0 +1,36 @@
+// GENERADO por scripts/build.mjs — no editar a mano.
+// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.1.0
+import * as React from 'react';
+import type { IconProps } from './types';
+
+export const Chick = React.forwardRef<SVGSVGElement, IconProps>(function Chick(
+  { size = 24, title, ...rest },
+  ref,
+) {
+  return (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0
+      0
+      64
+      64"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width={size}
+      height={size}
+      role={title ? 'img' : undefined}
+      aria-hidden={title ? undefined : true}
+      focusable="false"
+      {...rest}
+    >
+      {title ? <title>{title}</title> : null}
+      <path d="M35 10C41 10 46 14 46 20C46 24 45 27 43 29C46 32 47 37 45 41C42 47 36 50 30 50C22 50 16 45 15 38C14 31 17 24 22 20C25 14 29 10 35 10Z"/><path d="M34 10C32 6 34.5 3.5 37 5"/><path d="M29 11.5C27 8 29 5 31.5 6"/><path d="M46 17.88L51.52 20L46 22.13Z"/><circle cx="40" cy="19" r="1.25" fill="currentColor" stroke="none"/><path d="M20 38C22.5 34 27 33 31 35"/><path d="M21.5 42C24 38.5 27.5 37.5 30.5 39"/><path d="M15 36C10.5 34 8.5 30.5 8.5 27C11.5 29.5 13.5 32 15.5 33.8"/><path d="M27.5 49.5L27.5 54"/><path d="M24.5 57L27.5 54L30.5 57"/><path d="M27.5 54L27.5 57.5"/><path d="M34 49.5L34 54"/><path d="M31 57L34 54L37 57"/><path d="M34 54L34 57.5"/>
+    </svg>
+  );
+});
+
+export default Chick;

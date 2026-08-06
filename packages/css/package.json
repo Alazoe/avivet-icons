@@ -1,0 +1,18 @@
+{
+  "name": "@avivet/icons-css",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Andres Lazo",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alazoe/avivet-icons.git"
+  },
+  "description": "Hoja CSS de AviVet Icons",
+  "main": "avivet-icons.css",
+  "files": [
+    "avivet-icons.css"
+  ]
+}

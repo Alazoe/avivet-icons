@@ -1,0 +1,64 @@
+name: Icono nuevo
+description: Proponer un icono para la biblioteca
+title: "[icon] "
+labels: ["icono"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de dibujar hablamos del nombre y la categoría: renombrar un `id`
+        ya publicado es un *breaking change* (ICON_SPEC.md §14).
+
+  - type: input
+    id: id
+    attributes:
+      label: id propuesto
+      description: Inglés, kebab-case, singular. Ej. `feeder-pan`, `egg-tray`.
+      placeholder: feeder-pan
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Categoría
+      options:
+        - animals
+        - water
+        - medical
+        - nutrition
+        - buildings
+        - biosecurity
+        - production
+        - ui
+    validations:
+      required: true
+
+  - type: textarea
+    id: use
+    attributes:
+      label: ¿Dónde se va a usar?
+      description: Un caso real. Los iconos "por si acaso" no entran.
+      placeholder: En la planilla de crianza, para la columna de comederos por galpón.
+    validations:
+      required: true
+
+  - type: textarea
+    id: components
+    attributes:
+      label: ¿Qué componentes del catálogo lo pueden formar?
+      description: Revisa ICON_SPEC.md §5. Si hace falta una pieza nueva, dilo aquí.
+      placeholder: circle + rectangle + geometría propia para el plato del comedero.
+
+  - type: input
+    id: keywords
+    attributes:
+      label: Keywords
+      description: Mínimo 4, en inglés y español, sin repetir el id.
+      placeholder: pan, feeder, trough, comedero, plato, alimento
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: Referencia visual
+      description: Foto del equipo o dibujo de manual. Ayuda a que el icono sea correcto, no solo bonito.

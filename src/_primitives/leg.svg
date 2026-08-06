@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- PIEZA: pata. Tarso vertical de 6.5 px + 3 dedos (dos a +-3.5 px, uno recto de 4 px).
-       Adulto: tarso 6.5 px. Pollito: tarso 4.5 px y dedos de 3 px. -->
-  <path d="M29.5 46.5V53M26 56.5L29.5 53L33 56.5M29.5 53V57"/>
-  <path d="M38 46.5V53M34.5 56.5L38 53L41.5 56.5M38 53V57"/>
-</svg>

@@ -1,0 +1,21 @@
+{
+  "name": "@avivet/icons-react",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "Andres Lazo",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alazoe/avivet-icons.git"
+  },
+  "description": "Componentes React de AviVet Icons",
+  "main": "src/index.ts",
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "react": ">=17"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$comment": "AviVet Icons — unica fuente de verdad de los valores de presentacion. Ver ICON_SPEC.md seccion 3.",
+  "version": "0.1.0",
+  "canvas": {
+    "size": 64,
+    "padding": 4,
+    "safeArea": { "min": 4, "max": 60 },
+    "controlTolerance": 1
+  },
+  "stroke": {
+    "width": 2,
+    "linecap": "round",
+    "linejoin": "round",
+    "color": "currentColor",
+    "minGap": 4
+  },
+  "fill": "none",
+  "keyline": {
+    "square": 48,
+    "circle": 46,
+    "vertical": { "width": 20, "height": 52 }
+  },
+  "eye": {
+    "radius": 1.25,
+    "fill": "currentColor"
+  },
+  "precision": 2,
+  "sizes": { "sm": 16, "md": 24, "lg": 32, "xl": 48, "xxl": 64 },
+  "namespace": "ai"
+}

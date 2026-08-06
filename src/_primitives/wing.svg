@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <!-- PIEZA: ala plegada. Arcos ABIERTOS, nunca una hoja cerrada
-       (una hoja cerrada dentro del cuerpo se lee como un ojo).
-       Borde de ataque hacia el pecho. Adulto: 2 arcos a 4 px. Pollito: 1 arco. -->
-  <path d="M22 34C25 28 33 26 40 30"/>
-  <path d="M24.5 38C27.5 33 33 31 38 33"/>
-</svg>

@@ -1,164 +1,222 @@
+<div align="center">
+
 # AviVet Icons
 
-**Open Source Poultry SVG Library** · v1.0.0 · Licencia MIT
+**Open Source Poultry Design System**
 
-Biblioteca de iconos SVG para producción avícola: dibujos técnicos de manual
-veterinario, no caricaturas. Pensados para usarse igual en una página web, una
-presentación, una infografía, un informe en Word o una app.
+Iconos SVG de dibujo técnico para medicina veterinaria y producción avícola.
+
+[![licencia MIT](https://img.shields.io/badge/licencia-MIT-1D5C8F)](LICENSE)
+[![versión 0.1.0](https://img.shields.io/badge/versión-0.1.0-1D5C8F)](CHANGELOG.md)
+[![10 iconos](https://img.shields.io/badge/iconos-10-1D5C8F)](#iconos)
+[![Node ≥ 20](https://img.shields.io/badge/node-%E2%89%A5%2020-1D5C8F)](package.json)
+
+[Ver la biblioteca](https://alazoe.github.io/avivet-icons/) ·
+[Especificación](ICON_SPEC.md) ·
+[Contribuir](CONTRIBUTING.md) ·
+[Changelog](CHANGELOG.md)
+
+</div>
+
+---
+
+## Qué es
+
+Una biblioteca de iconos para gente que trabaja con aves: veterinarios,
+zootecnistas, productores y quien construya software para ellos. Dibujos
+técnicos de manual veterinario — no caricaturas, no emoji.
+
+Y es un **design system**, no una carpeta de SVG:
+
+> ### No dibujamos iconos. Construimos componentes.
+
+La gallina y el pollito comparten literalmente el mismo ojo, el mismo pico y la
+misma pata: **el mismo código**, no formas parecidas. Un `.svg` de este
+repositorio no es un archivo fuente, es un artefacto compilado a partir de
+`componentes + receta + tokens`.
+
+```js
+// packages/core/src/icons/animals/hen.icon.mjs — esto es un icono
+draw() {
+  const bird = silhouette({ variant: 'adult' });
+  const { crown, beak: bill, eye: socket, wing: shoulder, tail: rump, legs } = bird.anchors;
+
+  return [
+    ...bird.shapes,
+    ...comb({ at: crown, size: 'single' }),
+    ...beak({ at: bill }),
+    ...eye({ at: socket }),
+    ...wing({ at: shoulder, variant: 'adult' }),
+    ...tail({ at: rump, variant: 'hen' }),
+    ...legs.flatMap((at) => leg({ at, length: 6.5 })),
+  ];
+}
+```
+
+Cambiar `stroke.width` a `1.75` en `design-tokens.json` y ejecutar
+`npm run build` reescribe los 10 SVG, el sprite, el CSS y los componentes React
+y Vue. **Ningún archivo fuente cambia.** Ese es el criterio de aceptación del
+sistema.
+
+---
+
+## El sistema en seis valores
 
 | | |
 | --- | --- |
-| Grid | 64 × 64 px |
-| Trazo | 2 px, `stroke-linecap`/`linejoin` `round` |
-| Color | `currentColor` (nunca un color fijo) |
-| Iconos | 10 (Fase 1) |
-| Licencia | MIT |
+| Grid | 64 × 64 px, sin excepciones |
+| Zona segura | 4 px — ningún trazo toca el borde |
+| Trazo | 2 px, `linecap` y `linejoin` `round` |
+| Relleno | `none` (la única forma sólida es el ojo, r 1.25) |
+| Color | `currentColor` — nunca un color fijo |
+| Curvas | Bézier; las quiebras solo si son anatómicas |
 
-Las reglas completas del sistema gráfico están en **[DESIGN.md](DESIGN.md)** — el
-brand book. Ningún icono entra al repositorio si no las cumple.
-
----
-
-## Ver la biblioteca
-
-```bash
-open docs/index.html
-```
-
-Buscador en español e inglés, filtro por categoría, previsualización a 24/32/48 px,
-retícula de construcción y copiado del SVG con un clic. También hay una versión de
-un solo archivo, lista para compartir por correo o WhatsApp:
-`dist/avivet-icons-preview.html`.
+Todos viven en [`design-tokens.json`](design-tokens.json). Las reglas completas,
+en [`ICON_SPEC.md`](ICON_SPEC.md).
 
 ---
 
-## Cómo usar los iconos
+## Instalación y uso
 
-### 1. Sprite (recomendado para web)
-
-Un solo archivo para toda la biblioteca.
+### Sprite — un archivo para toda la biblioteca
 
 ```html
-<svg class="ai" width="24" height="24"><use href="sprite/avivet-icons.svg#ai-hen"/></svg>
+<svg width="24" height="24"><use href="sprite.svg#ai-hen"/></svg>
 ```
 
-```css
-.ai { fill: none; stroke: currentColor; }
-```
-
-### 2. CSS
-
-Hereda color y tamaño del texto que lo rodea, sin tocar el HTML del SVG.
+### CSS — hereda color y tamaño del texto
 
 ```html
-<link rel="stylesheet" href="css/avivet-icons.css">
+<link rel="stylesheet" href="avivet-icons.css">
 
 <i class="ai ai-hen"></i>
-<i class="ai ai-lg ai-vaccine-bottle" style="color:#0F6B4F"></i>
+<i class="ai ai-size-lg ai-vaccine-bottle" style="color:#0F6B4F"></i>
 ```
 
-Modificadores de tamaño: `.ai-sm` (0.875em), `.ai-lg` (1.5em), `.ai-xl` (2.5em).
+### React
 
-### 3. SVG suelto
+```tsx
+import { Hen, NippleDrinker } from '@avivet/icons-react';
 
-Para Word, PowerPoint, Canva o Illustrator: toma el archivo directo de `src/`.
-Como el trazo usa `currentColor`, en esas herramientas se abre en negro y se
-recolorea con el selector de color de la propia app.
+<Hen size={24} />                    {/* decorativo: aria-hidden */}
+<Hen title="Gallina" />              {/* informativo: se anuncia */}
+```
 
-### 4. Desde JavaScript
+### Vue
 
-`json/manifest.json` trae los metadatos y el cuerpo de cada icono, listo para
-consumir desde cualquier framework.
+```vue
+<script setup>
+import { Hen } from '@avivet/icons-vue';
+</script>
+
+<template><Hen :size="24" /></template>
+```
+
+El color **nunca** es una prop: se hereda con `currentColor`.
+
+### SVG suelto
+
+Para Word, PowerPoint, Canva o Illustrator: toma el archivo de
+`packages/core/svg/<categoría>/<id>.svg`.
+
+### JSON
 
 ```js
-const { icons } = await fetch('json/manifest.json').then(r => r.json());
-const hen = icons.find(i => i.id === 'hen');
+import manifest from '@avivet/icons-json';
+
+const hen = manifest.icons.find((i) => i.id === 'hen');
 el.innerHTML = `<svg viewBox="${hen.viewBox}" fill="none" stroke="currentColor"
   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${hen.body}</svg>`;
 ```
 
 ---
 
-## Iconos disponibles
+## Paquetes
 
-| Icono | id | Categoría |
+| Paquete | Contenido |
+| --- | --- |
+| `@avivet/icons` | Componentes, recetas y SVG |
+| `@avivet/icons-sprite` | `sprite.svg` |
+| `@avivet/icons-css` | Hoja CSS con máscaras |
+| `@avivet/icons-json` | `manifest.json` |
+| `@avivet/icons-react` | Componentes React tipados |
+| `@avivet/icons-vue` | Componentes Vue 3 |
+
+---
+
+## Iconos
+
+**10 iconos · v0.1.0**
+
+| Icono | `id` | Categoría |
 | --- | --- | --- |
 | Gallina | `hen` | animals |
 | Pollito | `chick` | animals |
-| Huevo | `egg` | production |
 | Gota de agua | `water-drop` | water |
-| Balde | `bucket` | equipment |
-| Frasco de vacuna | `vaccine-bottle` | vaccine |
+| Balde | `bucket` | water |
 | Bebedero nipple | `nipple-drinker` | water |
 | Bebedero campana | `bell-drinker` | water |
-| Planilla de registro | `clipboard` | ui |
-| Reloj | `clock` | ui |
+| Frasco de vacuna | `vaccine-bottle` | medical |
+| Planilla de registro | `clipboard` | medical |
+| Reloj | `clock` | medical |
+| Huevo | `egg` | production |
+
+Categorías previstas: `animals` · `water` · `medical` · `nutrition` ·
+`buildings` · `biosecurity` · `production` · `ui`.
 
 ---
 
 ## Desarrollo
 
 ```bash
-npm run validate      # aplica el checklist del brand book a todos los SVG
-npm run build         # genera sprite, CSS, manifest y el sitio de docs
-npm run new -- rooster animals   # crea src/animals/rooster.svg con la plantilla
+npm install
+npm test             # build + las 20 comprobaciones de la especificación
+npm run build        # regenera todos los artefactos
+npm run new -- rooster animals
+npm run preview      # sitio con buscador, retícula y prueba a 16 px
 ```
 
-### Añadir un icono
-
-1. `npm run new -- <id> <categoria>` — crea el archivo con el encabezado correcto.
-2. Dibújalo **ensamblando las piezas de `src/_primitives/`**, no a ojo.
-3. Añade su entrada en `metadata.json` (nombre, nombre en español, keywords).
-4. `npm run validate && npm run build`.
-5. Revísalo a 24 px en `docs/index.html` con la retícula activada.
-
-`validate` comprueba automáticamente viewBox, grosor, remates, `currentColor`,
-ausencia de colores literales y que el dibujo quede dentro del área viva.
+Sin dependencias de terceros. Sin bundler. Solo Node ≥ 20 — a propósito: una
+biblioteca de iconos que necesita mantenimiento de dependencias no dura años.
 
 ### Estructura
 
 ```text
-avivet-icons/
-├── DESIGN.md              # brand book: el ADN gráfico
-├── metadata.json          # fuente de verdad de los metadatos
-├── src/
-│   ├── _primitives/       # alfabeto visual (ojo, pico, cresta, pata, ala…)
-│   ├── animals/  water/  vaccine/  equipment/
-│   ├── biosecurity/  nutrition/  production/  ui/
-├── sprite/                # generado
-├── css/                   # generado
-├── json/                  # generado
-├── docs/                  # sitio con buscador
-├── dist/                  # preview en un solo archivo
-└── tools/                 # validate · build · new-icon
+design-tokens.json          ← valores de presentación (única fuente)
+packages/core/src/
+  components/               ← EL LEGO: 19 piezas reutilizables
+  icons/<categoría>/*.icon.mjs  ← RECETAS: composición + metadatos
+packages/core/svg/          ← generado
+packages/{sprite,css,json,react,vue}/  ← generado
+scripts/                    ← tokens · geometry · emit · registry · build
+tests/                      ← node:test contra los artefactos generados
+website/ → docs/            ← sitio de documentación (fuente → publicado)
 ```
 
-Todo lo marcado como *generado* sale de `npm run build`: no se edita a mano.
+Solo se edita a mano: `design-tokens.json`, `packages/core/src/`, `website/` y
+la documentación. Todo lo demás sale de `npm run build`.
 
 ---
 
 ## Hoja de ruta
 
-| Fase | Objetivo | Estado |
+| Versión | Alcance | Estado |
 | --- | --- | --- |
-| 0 | Sistema gráfico (brand book + alfabeto visual) | ✅ |
-| 1 | 10 iconos principales | ✅ |
-| 2 | 25 iconos | ⏳ |
-| 3 | 50 iconos (v1.0 completa) | ⏳ |
-| 4 | Sitio web con buscador y vista previa | ✅ (base lista) |
-| 5 | Publicación en GitHub + licencia MIT | ⏳ |
-
-### Candidatos para la Fase 2
-
-`rooster` · `pullet` · `broiler` · `feeder-pan` · `feed-bag` · `syringe` ·
-`eye-drop` · `spray-vaccination` · `drinking-water-vaccination` · `nest` ·
-`egg-tray` · `incubator` · `house` (galpón) · `fan` · `heater` · `thermometer` ·
-`humidity` · `scale` (peso) · `mortality` · `biosecurity-boots` · `shower` ·
-`disinfection` · `truck` · `visitor-log` · `alert`
+| v0.1 | Sistema de componentes + 10 iconos | ✅ |
+| v0.2 | 25 iconos · `nutrition` y `buildings` | ⏳ |
+| v0.5 | 50 iconos · publicación en npm | ⏳ |
+| v1.0 | 100 iconos | ⏳ |
+| v2.0 | Escenas: composiciones sobre lienzo mayor | ⏳ |
 
 ---
 
+## Contribuir
+
+Lee [`CONTRIBUTING.md`](CONTRIBUTING.md). En resumen: busca tu forma en el
+catálogo de componentes antes de dibujar, y adjunta al PR una captura a 16 px —
+si no se reconoce a ese tamaño, el icono no está terminado.
+
 ## Licencia
 
-MIT © Andrés Lazo. Úsalos, modifícalos y redistribúyelos, incluso comercialmente,
-manteniendo el aviso de licencia.
+[MIT](LICENSE) © Andrés Lazo — úsalos, modifícalos y redistribúyelos, incluso
+comercialmente, manteniendo el aviso de licencia.
