@@ -8,14 +8,14 @@
  *   bird.shapes   -> [ { tag:'path', d:'M44 12C…Z' } ]
  *   bird.anchors  -> { crown, beak, eye, wing, tail, legs:[…] }
  */
-import { pen, place, CENTER } from '../../../../scripts/geometry.mjs';
+import { pen, place, CENTER, FACING } from '../../../../scripts/geometry.mjs';
 import head from './head.mjs';
 import body from './body.mjs';
 import neck from './neck.mjs';
 
 export default function silhouette({ variant = 'adult', at = CENTER, scale = 1 } = {}) {
   const parts = [head({ variant }), body({ variant }), neck({ variant })];
-  const p = pen({ at, scale });
+  const p = pen({ at, scale, flip: FACING });
   parts.forEach((part) => part.draw(p));
 
   const anchors = parts.reduce((acc, part) => Object.assign(acc, part.anchors), {});
@@ -23,6 +23,6 @@ export default function silhouette({ variant = 'adult', at = CENTER, scale = 1 }
   return {
     variant,
     shapes: [p.shape()],
-    anchors: place(at, anchors, scale),
+    anchors: place(at, anchors, scale, FACING),
   };
 }

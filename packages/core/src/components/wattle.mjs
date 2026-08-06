@@ -8,14 +8,15 @@
  * `fits` deja esa decision explicita en la receta en vez de escondida.
  */
 import tokens from '../../../../scripts/tokens.mjs';
-import { draw } from '../../../../scripts/geometry.mjs';
+import { draw, FACING } from '../../../../scripts/geometry.mjs';
 
 /** ¿Cabe la barbilla sin invadir el cuello? `gap` = distancia libre medida. */
 export const fits = (gap) => gap >= tokens.stroke.minGap;
 
 export default function wattle({ at, scale = 1 }) {
-  return [draw({ at, scale }, (p) => p.M(0, 2.5)
-    .C(3, 4.5, 3.5, 8, 1.5, 9.5)
-    .C(-0.5, 8, -0.5, 4.5, 0, 2.5)
+  // Una sola curva mas la linea de cierre: el borde interno de la barbilla es
+  // recto contra el cuello, asi que gastar una segunda curva en el no aporta.
+  return [draw({ at, scale, flip: FACING }, (p) => p.M(0, 2.5)
+    .C(3.5, 5, 3.5, 9.5, 0.5, 10)
     .Z())];
 }

@@ -21,6 +21,20 @@ const VARIANTS = {
       eye: { x: 13.5, y: -15.5 },
     },
   },
+  // El gallo lleva la cabeza mas alta y erguida, y el craneo algo mayor: es lo
+  // que distingue al macho antes que la cresta.
+  rooster: {
+    start: [10, -19],
+    segments: [
+      [14, -19, 16, -16, 16, -13],
+      [16, -10, 14, -8, 13, -5],
+    ],
+    anchors: {
+      crown: { x: 10, y: -19 },
+      beak: { x: 16, y: -13 },
+      eye: { x: 11.5, y: -14.5 },
+    },
+  },
   chick: {
     start: [3, -22],
     segments: [

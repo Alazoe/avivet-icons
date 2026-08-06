@@ -20,6 +20,7 @@ export { default as leg } from './leg.mjs';
 export { default as foot } from './foot.mjs';
 
 // Formas genericas.
+export { default as egg, widthOf as eggWidth } from './egg.mjs';
 export { default as drop } from './drop.mjs';
 export { default as arrow } from './arrow.mjs';
 export { default as check } from './check.mjs';

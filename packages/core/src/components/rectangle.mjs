@@ -10,6 +10,11 @@ import { draw } from '../../../../scripts/geometry.mjs';
 
 export default function rectangle({ at, width, height, radius = tokens.canvas.padding / 2 }) {
   const r = Math.min(radius, width / 2, height / 2);
+  // Sin radio: cuatro rectas. El linejoin round ya redondea las esquinas, asi
+  // que una tapa o una caja no necesitan gastar cuatro curvas en ello.
+  if (r === 0) {
+    return [draw({ at }, (p) => p.M(0, 0).H(width).V(height).H(0).Z())];
+  }
   return [draw({ at }, (p) => p
     .M(r, 0)
     .H(width - r)

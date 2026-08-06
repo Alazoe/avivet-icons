@@ -11,7 +11,7 @@ export default {
   draw() {
     return [
       // Tapa de aluminio.
-      ...rectangle({ at: { x: 25, y: 7 }, width: 14, height: 8, radius: 2 }),
+      ...rectangle({ at: { x: 25, y: 7 }, width: 14, height: 8, radius: 0 }),
 
       // Cuello y cuerpo del frasco.
       draw({ at: { x: 32, y: 15 } }, (p) => p

@@ -7,6 +7,7 @@
 
 const VARIANTS = {
   adult: { segments: [[6, -12, 6, -17, 10, -20]] },
+  rooster: { segments: [[5, -10, 5, -15, 8, -19]] },
   chick: { segments: [[-7, -18, -3, -22, 3, -22]] },
 };
 

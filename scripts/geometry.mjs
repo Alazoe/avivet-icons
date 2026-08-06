@@ -16,16 +16,24 @@ export const round = (n) => Number(n.toFixed(precision));
 export const CENTER = Object.freeze({ x: tokens.canvas.size / 2, y: tokens.canvas.size / 2 });
 
 /**
- * pen({ at, scale }) — lapiz de trayectorias.
- * Comandos absolutos respecto del ancla: M, L, H, V, C, Q, Z.
+ * Signo horizontal de la anatomia aviar. La geometria de las aves se escribe
+ * UNA vez mirando a la derecha; este factor la refleja segun el token. Las
+ * formas genericas (gota, reloj, balde) no lo usan: no tienen lateralidad.
  */
-export function pen({ at = { x: 0, y: 0 }, scale = 1 } = {}) {
+export const FACING = tokens.anatomy.facing === 'left' ? -1 : 1;
+
+/**
+ * pen({ at, scale, flip }) — lapiz de trayectorias.
+ * Comandos absolutos respecto del ancla: M, L, H, V, C, Q, Z.
+ * `flip: FACING` refleja la pieza en horizontal sin reescribir sus numeros.
+ */
+export function pen({ at = { x: 0, y: 0 }, scale = 1, flip = 1 } = {}) {
   let d = '';
   let cursor = { x: 0, y: 0 };
   const onCurve = [];
   const control = [];
 
-  const X = (x) => round(at.x + x * scale);
+  const X = (x) => round(at.x + x * scale * flip);
   const Y = (y) => round(at.y + y * scale);
   const on = (x, y) => { cursor = { x, y }; const p = { x: X(x), y: Y(y) }; onCurve.push(p); return p; };
   const ctl = (x, y) => { const p = { x: X(x), y: Y(y) }; control.push(p); return p; };
@@ -76,8 +84,8 @@ export const circleShape = ({ at, r, solid = false }) => ({
 });
 
 /** Convierte anclas relativas al origen en anclas absolutas de lienzo. */
-export const place = (origin, anchors, scale = 1) => {
-  const one = (a) => ({ x: round(origin.x + a.x * scale), y: round(origin.y + a.y * scale) });
+export const place = (origin, anchors, scale = 1, flip = 1) => {
+  const one = (a) => ({ x: round(origin.x + a.x * scale * flip), y: round(origin.y + a.y * scale) });
   return Object.fromEntries(Object.entries(anchors).map(
     ([k, v]) => [k, Array.isArray(v) ? v.map(one) : one(v)]
   ));

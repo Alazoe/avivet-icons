@@ -5,8 +5,13 @@ export default {
   name: 'Hen',
   name_es: 'Gallina',
   category: 'animals',
+  taxon: 'bird',
   keywords: ['layer', 'chicken', 'bird', 'poultry', 'gallina', 'ponedora', 'ave', 'postura'],
   since: '0.1.0',
+  budget: {
+    maxSegments: 25,
+    reason: 'cresta de tres lobulos + cola de tres plumas: la anatomia Hy-Line Brown del brief',
+  },
 
   draw() {
     const bird = silhouette({ variant: 'adult' });

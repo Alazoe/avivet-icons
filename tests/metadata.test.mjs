@@ -20,14 +20,31 @@ test('13 · los id son unicos', () => {
   assert.equal(new Set(ids).size, ids.length);
 });
 
-test('14 · las keywords cubren los dos idiomas', () => {
+/** Misma normalizacion que el buscador del sitio. */
+const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+/** Reproduce la busqueda de website/search.js. */
+const search = (query) => icons.filter((icon) => {
+  const haystack = norm([icon.id, icon.name, icon.name_es, icon.keywords.join(' ')].join(' '));
+  return norm(query).split(/\s+/).every((term) => haystack.includes(term));
+});
+
+describe('14 · cada icono se encuentra buscando en espanol', () => {
+  // La prueba util no es "hay palabras en espanol en la lista", sino que un
+  // productor que escribe en su idioma encuentre el icono.
   for (const icon of icons) {
-    assert.ok(icon.keywords.length >= 4, `${icon.id}: menos de 4 keywords`);
-    assert.ok(
-      icon.keywords.some((k) => /[áéíóúñ]/.test(k)) ||
-      icon.keywords.some((k) => k !== k.normalize('NFD') || /^(gallina|pollito|huevo|agua|gota|balde|vacuna|frasco|dosis|bebedero|tetina|campana|colgante|planilla|registro|reloj|hora|horario|tiempo|auditoria|control|ave|postura|crianza|recria|produccion|cascara|consumo|humedad|acarreo|cubo|biologico|bb|linea de agua)$/.test(k)),
-      `${icon.id}: no se ve ninguna keyword en espanol`
-    );
+    test(icon.id, () => {
+      assert.ok(icon.keywords.length >= 4, `${icon.id}: menos de 4 keywords`);
+
+      const hits = search(icon.name_es);
+      assert.ok(hits.some((i) => i.id === icon.id),
+        `buscar "${icon.name_es}" no encuentra ${icon.id}`);
+
+      // Y tambien por la primera palabra suelta, que es como se busca de verdad.
+      const first = icon.name_es.split(' ')[0];
+      assert.ok(search(first).some((i) => i.id === icon.id),
+        `buscar "${first}" no encuentra ${icon.id}`);
+    });
   }
 });
 
@@ -53,7 +70,9 @@ describe('17 · draw() es puro y produce figuras', () => {
 });
 
 describe('las aves reutilizan el catalogo, no coordenadas sueltas', () => {
-  for (const icon of icons.filter((i) => i.category === 'animals')) {
+  // `taxon` y no `category`: en animals tambien viven cosas que no son aves,
+  // como el nido.
+  for (const icon of icons.filter((i) => i.taxon === 'bird')) {
     test(icon.id, () => {
       const paths = icon.draw().filter((s) => s.tag === 'path');
       // La silueta es un unico path cerrado: nunca circulos superpuestos (§6.1).

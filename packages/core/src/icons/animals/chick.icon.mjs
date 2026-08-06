@@ -5,8 +5,13 @@ export default {
   name: 'Chick',
   name_es: 'Pollito',
   category: 'animals',
+  taxon: 'bird',
   keywords: ['brooder', 'day-old', 'brooding', 'hatchling', 'pollito', 'bb', 'crianza', 'recria'],
   since: '0.1.0',
+  budget: {
+    maxSegments: 20,
+    reason: 'cabeza grande + cuerpo redondo: la silueta del pollito no admite menos curvas',
+  },
 
   draw() {
     const bird = silhouette({ variant: 'chick' });

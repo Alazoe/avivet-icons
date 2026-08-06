@@ -1,5 +1,5 @@
 // GENERADO por scripts/build.mjs — no editar a mano.
-// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.1.0
+// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.2.0
 import * as React from 'react';
 import type { IconProps } from './types';
 
@@ -28,7 +28,7 @@ export const Chick = React.forwardRef<SVGSVGElement, IconProps>(function Chick(
       {...rest}
     >
       {title ? <title>{title}</title> : null}
-      <path d="M35 10C41 10 46 14 46 20C46 24 45 27 43 29C46 32 47 37 45 41C42 47 36 50 30 50C22 50 16 45 15 38C14 31 17 24 22 20C25 14 29 10 35 10Z"/><path d="M34 10C32 6 34.5 3.5 37 5"/><path d="M29 11.5C27 8 29 5 31.5 6"/><path d="M46 17.88L51.52 20L46 22.13Z"/><circle cx="40" cy="19" r="1.25" fill="currentColor" stroke="none"/><path d="M20 38C22.5 34 27 33 31 35"/><path d="M21.5 42C24 38.5 27.5 37.5 30.5 39"/><path d="M15 36C10.5 34 8.5 30.5 8.5 27C11.5 29.5 13.5 32 15.5 33.8"/><path d="M27.5 49.5L27.5 54"/><path d="M24.5 57L27.5 54L30.5 57"/><path d="M27.5 54L27.5 57.5"/><path d="M34 49.5L34 54"/><path d="M31 57L34 54L37 57"/><path d="M34 54L34 57.5"/>
+      <path d="M29 10C23 10 18 14 18 20C18 24 19 27 21 29C18 32 17 37 19 41C22 47 28 50 34 50C42 50 48 45 49 38C50 31 47 24 42 20C39 14 35 10 29 10Z"/><path d="M30 10C32.5 5.5 29.5 3 26.5 4.5"/><path d="M18 17.88L12.48 20L18 22.13Z"/><circle cx="24" cy="19" r="1.25" fill="currentColor" stroke="none"/><path d="M44 38C41.5 34 37 33 33 35"/><path d="M42.5 42C40 38.5 36.5 37.5 33.5 39"/><path d="M49 36C52.5 34.5 54.5 32 55 28.5"/><path d="M36.5 49.5L36.5 54"/><path d="M33.5 57L36.5 54L39.5 57"/><path d="M30 49.5L30 54"/><path d="M27 57L30 54L33 57"/>
     </svg>
   );
 });

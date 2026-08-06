@@ -7,11 +7,11 @@
 Iconos SVG de dibujo técnico para medicina veterinaria y producción avícola.
 
 [![licencia MIT](https://img.shields.io/badge/licencia-MIT-1D5C8F)](LICENSE)
-[![versión 0.1.0](https://img.shields.io/badge/versión-0.1.0-1D5C8F)](CHANGELOG.md)
-[![10 iconos](https://img.shields.io/badge/iconos-10-1D5C8F)](#iconos)
+[![versión 0.2.0](https://img.shields.io/badge/versión-0.2.0-1D5C8F)](CHANGELOG.md)
+[![12 iconos](https://img.shields.io/badge/iconos-12-1D5C8F)](#iconos)
 [![Node ≥ 20](https://img.shields.io/badge/node-%E2%89%A5%2020-1D5C8F)](package.json)
 
-[Ver la biblioteca](https://alazoe.github.io/avivet-icons/) ·
+[Ver la biblioteca](https://avivet.cl/avivet-icons/) ·
 [Especificación](ICON_SPEC.md) ·
 [Contribuir](CONTRIBUTING.md) ·
 [Changelog](CHANGELOG.md)
@@ -65,6 +65,7 @@ sistema.
 | | |
 | --- | --- |
 | Grid | 64 × 64 px, sin excepciones |
+| Dirección | Las aves miran a la izquierda (`anatomy.facing`) |
 | Zona segura | 4 px — ningún trazo toca el borde |
 | Trazo | 2 px, `linecap` y `linejoin` `round` |
 | Relleno | `none` (la única forma sólida es el ojo, r 1.25) |
@@ -146,12 +147,14 @@ el.innerHTML = `<svg viewBox="${hen.viewBox}" fill="none" stroke="currentColor"
 
 ## Iconos
 
-**10 iconos · v0.1.0**
+**12 iconos · v0.2.0**
 
 | Icono | `id` | Categoría |
 | --- | --- | --- |
 | Gallina | `hen` | animals |
+| Gallo | `rooster` | animals |
 | Pollito | `chick` | animals |
+| Nido | `nest` | animals |
 | Gota de agua | `water-drop` | water |
 | Balde | `bucket` | water |
 | Bebedero nipple | `nipple-drinker` | water |
@@ -172,8 +175,9 @@ Categorías previstas: `animals` · `water` · `medical` · `nutrition` ·
 npm install
 npm test             # build + las 20 comprobaciones de la especificación
 npm run build        # regenera todos los artefactos
-npm run new -- rooster animals
-npm run preview      # sitio con buscador, retícula y prueba a 16 px
+npm run new -- pullet animals
+npm run sketch -- hen  # hoja de construcción: retícula + tira 16→128 px
+npm run preview        # sitio con buscador, retícula y prueba a 16 y 128 px
 ```
 
 Sin dependencias de terceros. Sin bundler. Solo Node ≥ 20 — a propósito: una
@@ -184,7 +188,7 @@ biblioteca de iconos que necesita mantenimiento de dependencias no dura años.
 ```text
 design-tokens.json          ← valores de presentación (única fuente)
 packages/core/src/
-  components/               ← EL LEGO: 19 piezas reutilizables
+  components/               ← EL LEGO: 20 piezas reutilizables
   icons/<categoría>/*.icon.mjs  ← RECETAS: composición + metadatos
 packages/core/svg/          ← generado
 packages/{sprite,css,json,react,vue}/  ← generado
@@ -203,7 +207,7 @@ la documentación. Todo lo demás sale de `npm run build`.
 | Versión | Alcance | Estado |
 | --- | --- | --- |
 | v0.1 | Sistema de componentes + 10 iconos | ✅ |
-| v0.2 | 25 iconos · `nutrition` y `buildings` | ⏳ |
+| v0.2 | Familia de animales completa · 25 iconos | ⏳ en curso |
 | v0.5 | 50 iconos · publicación en npm | ⏳ |
 | v1.0 | 100 iconos | ⏳ |
 | v2.0 | Escenas: composiciones sobre lienzo mayor | ⏳ |

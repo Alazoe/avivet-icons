@@ -115,16 +115,16 @@
 
   /* ---------- Prueba de legibilidad ---------- */
   var ruler = document.getElementById('ruler');
-  ['hen', 'nipple-drinker', 'vaccine-bottle', 'clipboard'].forEach(function (id) {
+  ['hen', 'rooster', 'chick', 'nest'].forEach(function (id) {
     var icon = icons.find(function (i) { return i.id === id; });
     if (!icon) return;
-    var row = [16, 24, 32, 48].map(function (px) {
+    var row = [16, 24, 48, 128].map(function (px) {
       return '<span style="width:' + px + 'px;height:' + px + 'px;display:inline-block">' +
         svgMarkup(icon).replace('width="64" height="64"', 'width="100%" height="100%"') + '</span>';
     }).join('');
     ruler.insertAdjacentHTML('beforeend',
       '<figure><span class="row">' + row + '</span>' +
-      '<figcaption>' + id + ' · 16 / 24 / 32 / 48 px</figcaption></figure>');
+      '<figcaption>' + id + ' · 16 / 24 / 48 / 128 px</figcaption></figure>');
   });
 
   render();

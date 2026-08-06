@@ -134,6 +134,8 @@ el repositorio.
   "fill":    "none",
   "keyline": { "square": 48, "circle": 46, "vertical": { "width": 20, "height": 52 } },
   "eye":     { "radius": 1.25, "fill": "currentColor" },
+  "anatomy": { "facing": "left" },
+  "budget":  { "maxSegments": 18, "maxBytes": 700 },
   "precision": 2,
   "sizes":   { "sm": 16, "md": 24, "lg": 32, "xl": 48, "xxl": 64 }
 }
@@ -149,6 +151,9 @@ el repositorio.
 | `stroke.minGap` | 4 | Separación mínima entre trazos paralelos: por debajo se fusionan a 16 px. |
 | `eye.radius` | 1.25 | Única forma sólida de la biblioteca (§6). |
 | `precision` | 2 | Decimales máximos en las coordenadas emitidas. |
+| `anatomy.facing` | `left` | Dirección de **todas** las aves. La geometría se escribe una vez mirando a la derecha y el emisor la refleja: cambiar este token voltea la familia entera sin redibujar nada. |
+| `budget.maxSegments` | 18 | Techo de complejidad por icono (§11.21). |
+| `budget.maxBytes` | 700 | Techo de peso de la geometría emitida. |
 
 ### El cambio de un solo archivo
 
@@ -263,30 +268,31 @@ Firma, ancla y regla de cada pieza. Ubicación:
 
 | Componente | Firma | Ancla | Regla |
 | --- | --- | --- | --- |
-| `head` | `head({ variant })` | — (inicia el contorno) | Tramo nuca → cráneo → base del pico → garganta. Proporción cabeza/cuerpo: adulto ≈ 1:3, pollito ≈ 1:1.6. |
+| `head` | `head({ variant })` | — (inicia el contorno) | Tramo nuca → cráneo → base del pico → garganta. Variantes `adult`, `rooster` (cabeza más alta y erguida) y `chick`. Proporción cabeza/cuerpo: adulto ≈ 1:3, pollito ≈ 1:1.6. |
 | `body` | `body({ variant })` | — (continúa el contorno) | Tramo pecho → vientre → dorso → base de cola. Cuatro curvas Bézier, nunca líneas rectas. |
 | `neck` | `neck({ variant })` | — (cierra el contorno) | Tramo dorso → nuca. Cierra contra el punto inicial de `head`. |
 | `silhouette` | `silhouette({ variant })` | expone todas | Encadena `head + body + neck` en un `<path>` cerrado y publica las anclas. |
 | `eye` | `eye({ at })` | `anchors.eye` | Círculo sólido `r = tokens.eye.radius`. Única forma con relleno. Siempre en el tercio frontal-superior de la cabeza. |
 | `beak` | `beak({ at, scale })` | `anchors.beak` | Triángulo cerrado 6.5 × 5. Adulto `scale: 1`; pollito `scale: .85`. |
-| `comb` | `comb({ at, size })` | `anchors.crown` | 3 lóbulos, el central más alto. `size: 'single'` (gallina) · `'big'` (gallo, 5 lóbulos y +60 % de altura) · `'pea'` (reproductora pesada). |
+| `comb` | `comb({ at, size })` | `anchors.crown` | Lo que va sobre la cabeza. `single` (gallina, 3 lóbulos) · `big` (gallo, 3 lóbulos y +80 % de altura) · `pea` (en guisante, líneas rústicas) · `tuft` (plumón del pollito, una pluma). |
 | `wattle` | `wattle({ at })` | `anchors.beak` | Lóbulo colgante. **Se omite** si queda a menos de `stroke.minGap` del cuello — por eso `hen` no la lleva y `rooster` sí. |
-| `wing` | `wing({ at, variant })` | `anchors.wing` | Arcos **abiertos**, jamás una hoja cerrada: una hoja cerrada dentro del cuerpo se lee como un segundo ojo. Adulto 2 arcos separados `minGap`; pollito 2 arcos cortos y retrasados. |
-| `tail` | `tail({ at, variant })` | `anchors.tail` | Pluma abierta + nervadura. `'hen'` corta y erguida · `'chick'` mínima · `'rooster'` 3 hoces. |
+| `wing` | `wing({ at, variant })` | `anchors.wing` | Arcos **abiertos**, jamás una hoja cerrada: una hoja cerrada dentro del cuerpo se lee como un segundo ojo. `adult` y `chick` llevan 2 arcos separados `minGap`; `simple` lleva 1, y solo sirve cuando hay otro trazo cerca que lo apoye — solo, se lee como una línea de vientre. |
+| `tail` | `tail({ at, variant })` | `anchors.tail` | Abanico de plumas, una curva por pluma, siempre abiertas. `hen` 3 plumas erguidas · `chick` 1 pluma mínima · `rooster` 2 hoces largas. |
 | `leg` | `leg({ at, length, foot })` | `anchors.legs[i]` | Tarso vertical. Adulto 6.5 · pollito 4.5. Compone `foot()` en el tobillo salvo `foot: false`. |
-| `foot` | `foot({ at, spread })` | tobillo de `leg` | 3 dedos: dos a ±`spread`, uno recto. |
+| `foot` | `foot({ at, spread, toes })` | tobillo de `leg` | Dos dedos a ±`spread`. El tercer dedo central (`toes: 3`) se pierde a 16 px y solo suma trazo: se reserva para lienzos grandes. |
 
 ### Formas genéricas
 
 | Componente | Firma | Regla |
 | --- | --- | --- |
+| `egg` | `egg({ at, height })` | Ovoide aviar: asimétrico en el eje polar (agudo arriba, romo abajo) y simétrico en el transversal, como el huevo real. El ancla es el polo agudo. |
 | `drop` | `drop({ at, height })` | Punta arriba, base circular. Relación alto:ancho = 3:2. |
 | `arrow` | `arrow({ from, to, head })` | Asta recta + punta de 2 segmentos a 45°. |
 | `check` | `check({ at, size })` | 2 segmentos a 90°, brazo largo el doble del corto. |
 | `cross` | `cross({ at, size, rotate })` | Cruz sanitaria (`rotate: 0`) o aspa de descarte (`rotate: 45`). |
 | `warning` | `warning({ at })` | Círculo keyline + asta + punto sólido. |
 | `circle` | `circle({ at, r })` | Keyline circular por defecto: `r = keyline.circle / 2`. |
-| `rectangle` | `rectangle({ at, width, height, radius })` | Esquinas redondeadas; `radius` por defecto = `canvas.padding / 2`. |
+| `rectangle` | `rectangle({ at, width, height, radius })` | Esquinas redondeadas; `radius` por defecto = `canvas.padding / 2`. Con `radius: 0` emite cuatro rectas: el `linejoin` redondo ya redondea las esquinas y así una tapa cuesta 3 segmentos en vez de 8. |
 
 Añadir un componente exige: entrada en esta tabla, geometría relativa a su ancla,
 y al menos un icono que lo use en el mismo PR.
@@ -300,8 +306,11 @@ Reglas no negociables para todo icono de la categoría `animals`:
 1. **Silueta continua.** Cabeza, cuello, pecho, vientre y dorso son **un solo
    `<path>` cerrado**. Nunca círculos superpuestos: dos arcos que se cruzan
    dentro del cuerpo delatan un dibujo ensamblado a ojo.
-2. **El ave mira a la derecha.** Sin excepciones, para que las composiciones de
-   varias aves sean coherentes.
+2. **El ave mira hacia donde diga `tokens.anatomy.facing`** — hoy, a la
+   izquierda, como en las láminas de manual veterinario, donde el animal entra
+   desde el margen. La geometría se escribe **siempre mirando a la derecha**;
+   el emisor la refleja. Nunca se dibuja un ave ya volteada: eso rompe el
+   token.
 3. **Mismo ojo, mismo pico, misma pata, misma cresta**, provenientes del mismo
    componente.
 4. **Ala y cola van encima** de la silueta, como trazos separados.
@@ -382,6 +391,33 @@ npm run preview                  # abre el sitio con retícula y prueba a 16 px
 siendo ilegible. Antes de abrir el PR: verlo a 16 px, con retícula, y en tema
 claro y oscuro.
 
+### 7.4 Los cuatro niveles
+
+Ningún icono salta del encargo al sprite. Pasa por cuatro estados, y cada uno
+tiene su artefacto:
+
+| Nivel | Qué es | Herramienta | Se aprueba cuando |
+| --- | --- | --- | --- |
+| **1 · Boceto** | Hoja de construcción: el dibujo sobre su retícula, con área viva, keylines y la tira de tamaños | `npm run sketch -- <id>` → `.sketch/<id>.svg` | Se reconoce **a 16 px** y aguanta **a 128 px** |
+| **2 · SVG** | La receta compone piezas del catálogo y el emisor produce el `.svg` | `npm run build` | Los tests 1–20 pasan |
+| **3 · Optimización** | Redondeo a `precision`, y los presupuestos de segmentos y bytes | `npm test` | Los tests 21–23 pasan sin excepción injustificada |
+| **4 · Sprite** | Entra en `sprite.svg`, el CSS, React, Vue y el manifest | `npm run build` | `git diff --exit-code` limpio |
+
+### 7.5 La regla de los dos extremos
+
+Todo icono debe verse **perfectamente a 16 px y a 128 px**. Son exigencias
+opuestas y por eso es la prueba más dura del sistema:
+
+- **A 16 px** manda la simplificación: los trazos a menos de `stroke.minGap` se
+  fusionan, los detalles finos se convierten en manchas, un tercer dedo o una
+  segunda pluma desaparecen en gris.
+- **A 128 px** manda la construcción: las curvas mal empalmadas se ven, un arco
+  solitario se lee como un trazo suelto, y una forma "que a 24 px funcionaba"
+  se revela como un garabato.
+
+Cuando las dos escalas piden cosas distintas, gana **16 px**: un icono ilegible
+a 16 px no sirve para nada, y uno simple a 128 px sigue siendo elegante.
+
 ---
 
 ## 8. Nomenclatura y categorías
@@ -421,6 +457,8 @@ objeto autocontenido.
 | `category` | string | ✔ | Una de §8 |
 | `keywords` | string[] | ✔ | ≥ 4, en ambos idiomas, sin repetir el `id` |
 | `since` | semver | ✔ | Versión en la que se publicó |
+| `taxon` | string | — | `bird` en las aves. `animals` también contiene cosas que no lo son, como el nido, y las reglas de anatomía solo aplican a las aves. |
+| `budget` | objeto | — | `{ maxSegments, maxBytes, reason }`. Sube el techo de §11.21–22 para **este** icono. Exige `reason`: una excepción sin justificar es complejidad que nadie decidió. |
 | `deprecated` | string | — | `id` del icono que lo reemplaza |
 | `draw` | función | ✔ | Pura, devuelve `Shape[]` |
 
@@ -494,6 +532,22 @@ existe hasta que pasa **todas** estas comprobaciones:
 | 13 | `id` kebab-case, único, = nombre de archivo | Colisión en el sprite |
 | 14 | ≥ 4 `keywords`, en ambos idiomas | Icono no buscable |
 | 15 | `since` es semver válido | Historial roto |
+
+### De presupuesto
+
+Un icono que crece en trazos deja de leerse a 16 px mucho antes de que se note
+a 64. Estos límites impiden que la complejidad se cuele sin que nadie la decida.
+
+| # | Comprobación | Fallo típico |
+| --- | --- | --- |
+| 21 | Segmentos ≤ `budget.maxSegments` (o el `budget` declarado en la receta) | El dibujo creció detalle a detalle |
+| 22 | Bytes de geometría ≤ `budget.maxBytes` | Curvas de más, decimales de más |
+| 23 | El sprite completo cabe en `maxBytes × nº de iconos` | La biblioteca engorda sin que nadie lo mire |
+
+Una receta puede superar el techo global **solo** declarando `budget` con su
+`reason`, y con dos límites: la excepción no puede pasar del 150 % del techo, y
+solo la familia `animals` puede pedirla. Un objeto que no cabe en 18 segmentos
+está mal simplificado, no es un objeto complejo.
 
 ### De sistema
 
@@ -609,10 +663,21 @@ misma versión. Un test lo comprueba.
 
 ## 16. Roadmap
 
+Se trabaja **por familias**, no icono a icono: cuando una familia se cierra,
+cualquier miembro nuevo hereda su estilo sin decisiones nuevas. Terminada la
+familia de aves, una codorniz, un pato o un pavo son una variante de contorno
+más, no un dibujo desde cero.
+
+| Familia | Iconos | Estado |
+| --- | --- | --- |
+| **A · Animales** | hen · rooster · chick · egg · nest | ✅ |
+| **B · Agua** | drop · nipple · bell-drinker · bucket · flush | ⏳ falta `flush` |
+| **C · Sanidad** | vaccine-bottle · thermometer · clipboard · clock · check | ⏳ faltan `thermometer` y `check` |
+
 | Versión | Alcance | Estado |
 | --- | --- | --- |
 | v0.1 | Sistema de componentes + 10 iconos | ✅ |
-| v0.2 | 25 iconos · categorías `nutrition` y `buildings` | ⏳ |
+| v0.2 | Familia A completa · 25 iconos · `nutrition` y `buildings` | ⏳ |
 | v0.5 | 50 iconos · paquetes publicados en npm | ⏳ |
 | v1.0 | 100 iconos · sitio con búsqueda y descarga | ⏳ |
 | v2.0 | Escenas: composiciones de varios componentes (galpón en producción, cadena de frío de la vacuna) | ⏳ |

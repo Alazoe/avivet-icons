@@ -7,9 +7,14 @@
  * En el pollito el ala va retrasada: un arco bajo la cara se lee como una boca.
  * Los dos arcos van separados tokens.stroke.minGap.
  */
-import { draw } from '../../../../scripts/geometry.mjs';
+import { draw, FACING } from '../../../../scripts/geometry.mjs';
 
 const VARIANTS = {
+  // Un solo arco: el ala plegada de un ave en reposo. Es la variante por
+  // defecto de los adultos porque a 16 px el segundo arco se funde con el primero.
+  simple: [
+    (p) => p.M(0, 0).C(3, -6, 11, -8, 18, -4),
+  ],
   adult: [
     (p) => p.M(0, 0).C(3, -6, 11, -8, 18, -4),
     (p) => p.M(2.5, 4).C(5.5, -1, 11, -3, 16, -1),
@@ -23,7 +28,7 @@ const VARIANTS = {
 export default function wing({ at, variant = 'adult', scale = 1 }) {
   const arcs = VARIANTS[variant];
   if (!arcs) throw new Error(`wing: variante desconocida "${variant}"`);
-  return arcs.map((cmds) => draw({ at, scale }, cmds));
+  return arcs.map((cmds) => draw({ at, scale, flip: FACING }, cmds));
 }
 
 export const variants = Object.keys(VARIANTS);

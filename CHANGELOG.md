@@ -3,6 +3,56 @@
 Formato [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) ·
 versionado semántico sobre la superficie pública (`ICON_SPEC.md` §14).
 
+## [0.2.0] — 2026-08-06
+
+Correccion de rumbo del Director de Arte: se trabaja **por familias**, no icono
+a icono. Familia A (animales) cerrada.
+
+### Añadido
+
+- **`rooster`** y **`nest`** — la familia de animales queda completa:
+  `hen` · `rooster` · `chick` · `egg` · `nest`.
+- **Componente `egg`** — el ovoide asciende del icono al catálogo por la regla
+  de las dos apariciones: lo usan `egg` y `nest`.
+- **Variante `rooster`** de `head`, `body`, `neck` y `tail` — un gallo no es una
+  gallina con cresta grande: lleva la cabeza más alta, el pecho más profundo y
+  hoces en vez de plumas rectas.
+- **`npm run sketch`** — Nivel 1 del flujo: hoja de construcción con retícula,
+  área viva, keylines y tira de 16 a 128 px. Ningún icono salta del encargo al
+  sprite.
+- **Presupuestos de complejidad** (tests 21–23): ≤ 18 segmentos y ≤ 700 bytes
+  por icono. Una receta puede superarlos solo declarando un `budget` con su
+  `reason`, acotado al 150 % y exclusivo de la familia `animals`.
+- **Campo `taxon`** en los metadatos: las reglas de anatomía aplican a las aves,
+  no a todo lo que vive en `animals` — un nido no tiene ojo.
+
+### Cambiado
+
+- **Las aves miran a la izquierda** (`tokens.anatomy.facing`). La geometría se
+  sigue escribiendo mirando a la derecha y el emisor la refleja: el cambio de
+  dirección de toda la familia fue **un token**, cero recetas tocadas.
+- **La cola de la gallina pasa a tres plumas** y las patas a dos dedos, según el
+  brief: el tercer dedo se pierde a 16 px y solo sumaba trazo.
+- **La tapa del frasco y la pinza de la planilla** se redibujaron más simples
+  para entrar en presupuesto: 20 → 15 y 21 → 17 segmentos, sin perder lectura.
+- **El test de keywords** ya no busca palabras españolas en una lista: comprueba
+  que buscando `name_es` en el buscador real aparezca el icono. Se probaba la
+  forma, ahora se prueba la propiedad.
+
+### Decisiones de dibujo
+
+- **El ala de un solo arco se lee como línea de vientre.** Se probó a 128 px y
+  se revirtió: la variante `simple` queda en el catálogo, pero las aves usan dos
+  arcos. Un segmento de más que sí paga.
+- **Los huevos del nido van dentro del cuenco, no cruzados por su borde.** Con
+  el borde cruzándolos se leía "huevos delante de un plato".
+- **El nido lleva tres briznas** cruzando el borde: sin ellas, el cuenco se leía
+  como vajilla.
+- **La barbilla del gallo es una curva más la línea de cierre**: su borde
+  interno es recto contra el cuello, así que la segunda curva no aportaba nada.
+
+---
+
 ## [0.1.0] — 2026-08-05
 
 Primera versión del sistema. El proyecto deja de ser una carpeta de SVG y pasa
