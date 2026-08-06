@@ -1,0 +1,99 @@
+{
+  "library": "AviVet Icons",
+  "version": "1.0.0",
+  "grid": 64,
+  "strokeWidth": 2,
+  "license": "MIT",
+  "categories": {
+    "animals": { "name_es": "Animales", "emoji": "🐔" },
+    "water": { "name_es": "Agua", "emoji": "💧" },
+    "vaccine": { "name_es": "Vacunación", "emoji": "💉" },
+    "biosecurity": { "name_es": "Bioseguridad", "emoji": "🦠" },
+    "nutrition": { "name_es": "Nutrición", "emoji": "🥣" },
+    "equipment": { "name_es": "Equipos", "emoji": "⚙️" },
+    "production": { "name_es": "Producción", "emoji": "📊" },
+    "ui": { "name_es": "Gestión / UI", "emoji": "📋" }
+  },
+  "icons": [
+    {
+      "id": "hen",
+      "name": "Hen",
+      "name_es": "Gallina",
+      "category": "animals",
+      "keywords": ["layer", "chicken", "bird", "aviculture", "poultry", "gallina", "ponedora", "ave"],
+      "version": "1.0"
+    },
+    {
+      "id": "chick",
+      "name": "Chick",
+      "name_es": "Pollito",
+      "category": "animals",
+      "keywords": ["chick", "day-old", "brooding", "baby", "pollito", "bb", "crianza", "recria"],
+      "version": "1.0"
+    },
+    {
+      "id": "egg",
+      "name": "Egg",
+      "name_es": "Huevo",
+      "category": "production",
+      "keywords": ["egg", "shell", "production", "laying", "huevo", "postura", "cascara"],
+      "version": "1.0"
+    },
+    {
+      "id": "water-drop",
+      "name": "Water Drop",
+      "name_es": "Gota de agua",
+      "category": "water",
+      "keywords": ["water", "drop", "humidity", "hydration", "agua", "gota", "humedad", "consumo"],
+      "version": "1.0"
+    },
+    {
+      "id": "bucket",
+      "name": "Bucket",
+      "name_es": "Balde",
+      "category": "equipment",
+      "keywords": ["bucket", "pail", "feed", "carry", "balde", "cubo", "alimento"],
+      "version": "1.0"
+    },
+    {
+      "id": "vaccine-bottle",
+      "name": "Vaccine Bottle",
+      "name_es": "Frasco de vacuna",
+      "category": "vaccine",
+      "keywords": ["vaccine", "vial", "bottle", "dose", "vacuna", "frasco", "dosis", "biologico"],
+      "version": "1.0"
+    },
+    {
+      "id": "nipple-drinker",
+      "name": "Nipple Drinker",
+      "name_es": "Bebedero nipple",
+      "category": "water",
+      "keywords": ["nipple", "drinker", "water line", "nipple", "bebedero", "linea de agua", "tetina"],
+      "version": "1.0"
+    },
+    {
+      "id": "bell-drinker",
+      "name": "Bell Drinker",
+      "name_es": "Bebedero campana",
+      "category": "water",
+      "keywords": ["bell", "drinker", "hanging", "water", "campana", "bebedero", "colgante"],
+      "version": "1.0"
+    },
+    {
+      "id": "clipboard",
+      "name": "Clipboard",
+      "name_es": "Planilla de registro",
+      "category": "ui",
+      "keywords": ["clipboard", "checklist", "record", "audit", "planilla", "registro", "checklist", "auditoria"],
+      "version": "1.0"
+    },
+    {
+      "id": "clock",
+      "name": "Clock",
+      "name_es": "Reloj",
+      "category": "ui",
+      "keywords": ["clock", "time", "schedule", "hours", "reloj", "hora", "horario", "tiempo"],
+      "version": "1.0"
+    }
+  ]
+}

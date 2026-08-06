@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- PIEZA: silueta base del ave adulta. Un solo path cerrado:
+       cabeza -> cuello -> pecho -> vientre -> dorso -> base de cola -> nuca.
+       Nunca se construye con circulos superpuestos. -->
+  <path d="M44 12C48 12 50 15 50 18C50 21 47 23 46 26C48 29 49 33 48 37C47 43 41 47 34 47C26 47 19 44 16 39C14 36 14 32 16 29C21 24 30 22 36 23C38 20 38 15 42 12Z"/>
+</svg>

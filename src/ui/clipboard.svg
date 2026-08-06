@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- tabla -->
+  <path d="M24 12H18C15.8 12 14 13.8 14 16V54C14 56.2 15.8 58 18 58H46C48.2 58 50 56.2 50 54V16C50 13.8 48.2 12 46 12H40"/>
+  <!-- pinza -->
+  <path d="M25 11.5C25 8.5 28.1 6 32 6C35.9 6 39 8.5 39 11.5V14C39 15.7 37.7 17 36 17H28C26.3 17 25 15.7 25 14Z"/>
+  <!-- items verificados -->
+  <path d="M20 30L23 33L29 27M33 31H44"/>
+  <path d="M20 43L23 46L29 40M33 44H44"/>
+</svg>

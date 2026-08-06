@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- tapa de aluminio -->
+  <path d="M27 7H37C38.1 7 39 7.9 39 9V13C39 14.1 38.1 15 37 15H27C25.9 15 25 14.1 25 13V9C25 7.9 25.9 7 27 7Z"/>
+  <!-- cuello y cuerpo del frasco -->
+  <path d="M28 15V19.5C22.5 21.5 19 26 19 31.5V50C19 52.8 21.2 55 24 55H40C42.8 55 45 52.8 45 50V31.5C45 26 41.5 21.5 36 19.5V15"/>
+  <!-- nivel del liquido -->
+  <path d="M19 34C25 31.5 39 31.5 45 34"/>
+  <!-- cruz sanitaria -->
+  <path d="M32 40V48M28 44H36"/>
+</svg>

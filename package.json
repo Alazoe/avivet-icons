@@ -1,0 +1,16 @@
+{
+  "name": "avivet-icons",
+  "version": "1.0.0",
+  "description": "Open Source Poultry SVG Library — iconos de dibujo tecnico para produccion avicola",
+  "license": "MIT",
+  "author": "Andres Lazo",
+  "type": "module",
+  "keywords": ["icons", "svg", "poultry", "aviculture", "veterinary", "avivet"],
+  "files": ["src", "sprite", "css", "json", "metadata.json", "DESIGN.md"],
+  "scripts": {
+    "validate": "node tools/validate.mjs",
+    "build": "node tools/validate.mjs && node tools/build.mjs",
+    "new": "node tools/new-icon.mjs",
+    "docs": "open docs/index.html"
+  }
+}
