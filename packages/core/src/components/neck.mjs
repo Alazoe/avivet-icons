@@ -6,7 +6,15 @@
  */
 
 const VARIANTS = {
-  adult: { segments: [[6, -12, 6, -17, 10, -20]] },
+  // En el adulto este tramo es la linea dorsal completa: de la base de la cola
+  // al dorso y de ahi a la nuca, en una sola curva. Es la linea que da el porte
+  // tranquilo de la ponedora; si se quiebra, el ave se ve alerta.
+  // Dos tramos: la linea dorsal (base de cola -> cruz) y el dorso del cuello
+  // (cruz -> nuca). Separarlos es lo que hace que la gallina tenga CUELLO: con
+  // una sola curva la cabeza se apoya en los hombros y el ave parece un pato.
+  // Linea dorsal y cuello en una sola curva. El cuello de una Hy-Line Brown es
+  // CORTO: si se le da tramo propio, el ave se estira y parece un ganso.
+  adult: { segments: [[-8, -2, 0, -5, 6, -12]] },
   rooster: { segments: [[5, -10, 5, -15, 8, -19]] },
   chick: { segments: [[-7, -18, -3, -22, 3, -22]] },
 };

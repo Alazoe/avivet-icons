@@ -11,10 +11,12 @@
 import { draw, FACING } from '../../../../scripts/geometry.mjs';
 
 const VARIANTS = {
+  // Plumas cortas y poco abiertas: mas largas o mas separadas se leen como
+  // rayos de sol saliendo del cuerpo, no como cola.
   hen: [
-    (p) => p.M(0, 0).C(-4, -3, -8, -7, -10, -12),
-    (p) => p.M(0.5, 2).C(-4, 0, -9, -4, -11.5, -8),
-    (p) => p.M(1, 4).C(-4, 3, -9, 1, -12, -3),
+    (p) => p.M(0, 0).C(-2.5, -2, -5.5, -4.5, -7.5, -8.5),
+    (p) => p.M(0, 1.5).C(-2.5, 0, -5.5, -1.5, -8, -4.5),
+    (p) => p.M(0, 3).C(-2.5, 2, -5.5, 1.5, -8, -0.5),
   ],
   chick: [
     (p) => p.M(0, 0).C(-3.5, -1.5, -5.5, -4, -6, -7.5),

@@ -1,24 +1,30 @@
 /**
  * COMPONENTE DE CONTORNO — HEAD
  *
- * Tramo del contorno: nuca -> craneo -> base del pico -> garganta.
- * No es un dibujo independiente: es el primer tercio del unico <path> cerrado
+ * Tramo del contorno: nuca -> craneo -> pico -> garganta.
+ * No es un dibujo independiente: es el primer tramo del unico <path> cerrado
  * que forma el ave (ICON_SPEC.md §6.1). Coordenadas relativas al centro del ave.
+ *
+ * El pico NO va aqui: se probo integrarlo como vertice del contorno para
+ * ahorrar dos segmentos y salio una cuna del tamano de la cara. Con una sola
+ * curva no se puede redondear el craneo Y rematar en punta corta. El pico es
+ * pieza aparte (BEAK) y se apoya sobre este contorno.
  *
  * Proporcion cabeza/cuerpo: adulto 1:3 · pollito 1:1.6.
  */
 
 const VARIANTS = {
+  // Hy-Line Brown: craneo redondeado, cabeza proporcionada, sin exagerar.
   adult: {
-    start: [12, -20],
+    start: [6, -12],
     segments: [
-      [16, -20, 18, -17, 18, -14],   // craneo -> base del pico
-      [18, -11, 15, -9, 14, -6],     // base del pico -> garganta
+      [8, -20, 18, -20, 20, -13],    // nuca -> craneo CONVEXO -> cara
+      [20, -9, 16, -8, 11, -8],      // cara -> mejilla -> garganta
     ],
     anchors: {
-      crown: { x: 12, y: -20 },
-      beak: { x: 18, y: -14 },
-      eye: { x: 13.5, y: -15.5 },
+      crown: { x: 13, y: -19 },
+      beak: { x: 19.5, y: -13 },
+      eye: { x: 15, y: -14.5 },
     },
   },
   // El gallo lleva la cabeza mas alta y erguida, y el craneo algo mayor: es lo

@@ -1,4 +1,4 @@
-<!-- GENERADO por scripts/build.mjs — no editar a mano. ·  Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.2.0 -->
+<!-- GENERADO por scripts/build.mjs — no editar a mano. ·  Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.2.1 -->
 <script setup lang="ts">
 withDefaults(defineProps<{ size?: number | string; title?: string }>(), { size: 24 });
 </script>
@@ -22,6 +22,6 @@ withDefaults(defineProps<{ size?: number | string; title?: string }>(), { size: 
     focusable="false"
   >
     <title v-if="title">{{ title }}</title>
-    <path d="M20 12C16 12 14 15 14 18C14 21 17 23 18 26C16 29 15 33 16 37C17 43 23 47 30 47C38 47 45 44 48 39C50 36 50 32 48 29C43 24 34 22 28 23C26 20 26 15 22 12Z"/><path d="M24.5 13.5C25 9.5 21 9 21 12.5C21 8 17 8 17 12C17 9.5 15 10 15 13.5"/><path d="M14 15.5L7.5 18L14 20.5Z"/><circle cx="18.5" cy="16.5" r="1.25" fill="currentColor" stroke="none"/><path d="M42 34C39 28 31 26 24 30"/><path d="M39.5 38C36.5 33 31 31 26 33"/><path d="M45.5 27C49.5 24 53.5 20 55.5 15"/><path d="M45 29C49.5 27 54.5 23 57 19"/><path d="M44.5 31C49.5 30 54.5 28 57.5 24"/><path d="M34.5 46.5L34.5 53"/><path d="M31 56.5L34.5 53L38 56.5"/><path d="M26 46.5L26 53"/><path d="M22.5 56.5L26 53L29.5 56.5"/>
+    <path d="M26 20C24 12 14 12 12 19C12 23 16 24 21 24C19 31 24 48 34 50C45 50 53 42 52 31C40 30 32 27 26 20Z"/><path d="M23.5 14.5C24 10.5 20 10 20 13.5C20 9 16 9 16 13C16 10.5 14 11 14 14.5"/><path d="M12.5 16.5L6 19L12.5 21.5Z"/><circle cx="17" cy="17.5" r="1.25" fill="currentColor" stroke="none"/><path d="M46 40C42.85 33.7 34.45 31.6 27.1 35.8"/><path d="M50 30C52.5 28 55.5 25.5 57.5 21.5"/><path d="M50 31.5C52.5 30 55.5 28.5 58 25.5"/><path d="M50 33C52.5 32 55.5 31.5 58 29.5"/><path d="M38.7 49.5L38.7 56.5"/><path d="M29.6 48.7L29.6 56.5"/>
   </svg>
 </template>

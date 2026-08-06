@@ -3,6 +3,32 @@
 Formato [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) ·
 versionado semántico sobre la superficie pública (`ICON_SPEC.md` §14).
 
+## [0.2.1] — 2026-08-06
+
+### Cambiado
+
+- **`hen` redibujada a presupuesto: 25 → 17 segmentos**, 549 bytes. Sin
+  excepción declarada: entra en los 18 del token, como cualquier objeto.
+
+### Decisiones de dibujo
+
+- **El pico como vértice del contorno no funciona.** Se probó para ahorrar dos
+  segmentos: una sola curva no puede redondear el cráneo Y rematar en punta
+  corta, así que la cuña salía del tamaño de la cara. El pico vuelve a ser
+  pieza (`beak`) y el ahorro se buscó en otro sitio.
+- **El cuello no lleva tramo propio.** Con curva propia el ave se estira y
+  parece un ganso; la Hy-Line Brown tiene el cuello corto. El cuello sale de la
+  transición entre la línea dorsal y la garganta.
+- **La nuca va por debajo de la coronilla.** Con las dos a la misma altura el
+  cráneo baja recto al pico y la cabeza pierde volumen: se lee como un pico con
+  cresta, no como una cabeza.
+- **Patas: dos tarsos rectos, sin dedos**, como en el boceto de referencia. Los
+  dedos desaparecen a 16 px y costaban 4 segmentos de los 18.
+- **Las plumas de la cola arrancan casi del mismo punto.** Divergiendo desde el
+  origen se leen como rayos de sol saliendo del cuerpo.
+
+---
+
 ## [0.2.0] — 2026-08-06
 
 Correccion de rumbo del Director de Arte: se trabaja **por familias**, no icono

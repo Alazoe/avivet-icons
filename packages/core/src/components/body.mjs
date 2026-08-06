@@ -7,18 +7,19 @@
  */
 
 const VARIANTS = {
+  // Cuerpo ovalado de ponedora en DOS curvas. La primera hace la ese del cuello
+  // y el pecho; la segunda, el vientre y el flanco hasta la base de la cola.
+  // Menos curvas y mejor puestas: es lo que separa un contorno tecnico de uno
+  // dibujado a ojo.
   adult: {
     segments: [
-      [16, -3, 17, 1, 16, 5],        // pecho
-      [15, 11, 9, 15, 2, 15],        // vientre
-      [-6, 15, -13, 12, -16, 7],     // vientre -> flanco
-      [-18, 4, -18, 0, -16, -3],     // flanco -> base de cola
-      [-11, -8, -2, -10, 4, -9],     // dorso
+      [13, -1, 8, 16, -2, 18],       // garganta -> cuello frontal -> pecho -> vientre
+      [-13, 18, -21, 10, -20, -1],   // vientre -> flanco -> base de cola
     ],
     anchors: {
-      wing: { x: -10, y: 2 },
-      tail: { x: -13.5, y: -5 },
-      legs: [{ x: -2.5, y: 14.5 }, { x: 6, y: 14.5 }],
+      wing: { x: -14, y: 8 },
+      tail: { x: -18, y: -2 },
+      legs: [{ x: -6.7, y: 17.5 }, { x: 2.4, y: 16.7 }],
     },
   },
   // Pecho mas profundo y dorso mas largo que la gallina: el gallo ocupa mas
