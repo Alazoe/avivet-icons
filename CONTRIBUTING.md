@@ -98,18 +98,21 @@ busca por `id`). Piensa en cómo lo buscaría alguien que no conoce la bibliotec
 ### 4. Construye y valida
 
 ```bash
-npm test        # build + las 20 comprobaciones de la spec
+npm test        # build + las 23 comprobaciones de la spec
 ```
 
 ### 5. Mira el icono
 
-Esto no lo hace ningún test:
+Esto no lo hace ningún test. Los cuatro niveles de `ICON_SPEC.md` §7.4 empiezan
+aquí, y el Nivel 1 no se salta:
 
 ```bash
-npm run preview
+npm run sketch -- rooster   # hoja de construcción: retícula + tira 16→128 px
+npm run preview             # la biblioteca completa, en contexto
 ```
 
-- ¿Se reconoce **a 16 px** sin leer la etiqueta?
+- ¿Se reconoce **a 16 px** sin leer la etiqueta? ¿Aguanta **a 128 px**?
+- ¿Cabe en el presupuesto de 18 segmentos, o la excepción está justificada?
 - ¿Hay dos trazos paralelos a menos de 4 px? (activa la **retícula**)
 - ¿Alguna forma cerrada dentro del cuerpo se lee como un ojo?
 - ¿Se ve bien en **tema claro y oscuro**?

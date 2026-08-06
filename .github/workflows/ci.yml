@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -19,7 +20,7 @@ jobs:
       - name: Instalar
         run: npm install
 
-      - name: Build + las 20 comprobaciones de ICON_SPEC.md §11
+      - name: Build + las 23 comprobaciones de ICON_SPEC.md §11
         run: npm test
 
       # El build es determinista: si los artefactos generados no coinciden con

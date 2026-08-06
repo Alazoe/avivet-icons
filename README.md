@@ -54,7 +54,7 @@ draw() {
 ```
 
 Cambiar `stroke.width` a `1.75` en `design-tokens.json` y ejecutar
-`npm run build` reescribe los 10 SVG, el sprite, el CSS y los componentes React
+`npm run build` reescribe los 12 SVG, el sprite, el CSS y los componentes React
 y Vue. **Ningún archivo fuente cambia.** Ese es el criterio de aceptación del
 sistema.
 
@@ -173,7 +173,7 @@ Categorías previstas: `animals` · `water` · `medical` · `nutrition` ·
 
 ```bash
 npm install
-npm test             # build + las 20 comprobaciones de la especificación
+npm test             # build + las 23 comprobaciones de la especificación
 npm run build        # regenera todos los artefactos
 npm run new -- pullet animals
 npm run sketch -- hen  # hoja de construcción: retícula + tira 16→128 px
