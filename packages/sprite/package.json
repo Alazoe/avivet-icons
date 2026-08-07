@@ -1,6 +1,6 @@
 {
   "name": "@avivet/icons-sprite",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "license": "MIT",
   "author": "Andres Lazo",
   "publishConfig": {
@@ -10,8 +10,13 @@
     "type": "git",
     "url": "https://github.com/Alazoe/avivet-icons.git"
   },
+  "homepage": "https://avivet.cl/avivet-icons/",
   "description": "Sprite SVG de AviVet Icons",
-  "main": "sprite.svg",
+  "main": "./sprite.svg",
+  "exports": {
+    ".": "./sprite.svg",
+    "./sprite.svg": "./sprite.svg"
+  },
   "files": [
     "sprite.svg"
   ]

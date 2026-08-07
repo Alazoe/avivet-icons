@@ -1,6 +1,6 @@
 {
   "name": "@avivet/icons",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "license": "MIT",
   "author": "Andres Lazo",
   "publishConfig": {
@@ -10,11 +10,28 @@
     "type": "git",
     "url": "https://github.com/Alazoe/avivet-icons.git"
   },
+  "homepage": "https://avivet.cl/avivet-icons/",
   "description": "Componentes, recetas y SVG de AviVet Icons",
   "type": "module",
-  "main": "src/components/index.mjs",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./svg/*": "./svg/*",
+    "./package.json": "./package.json"
+  },
   "files": [
-    "src",
-    "svg"
-  ]
+    "dist",
+    "svg",
+    "src"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  }
 }

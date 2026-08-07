@@ -5,12 +5,12 @@
 > Crear la biblioteca SVG más completa del mundo para medicina veterinaria y
 > producción avícola.
 
-| | |
-| --- | --- |
-| Documento | `ICON_SPEC.md` — fuente de verdad del proyecto |
-| Versión de la spec | 1.0 |
-| Estado | Vigente desde v0.1.0 |
-| Licencia | MIT |
+|                    |                                                |
+| ------------------ | ---------------------------------------------- |
+| Documento          | `ICON_SPEC.md` — fuente de verdad del proyecto |
+| Versión de la spec | 1.0                                            |
+| Estado             | Vigente desde v0.1.0                           |
+| Licencia           | MIT                                            |
 
 Este documento manda sobre cualquier otro archivo del repositorio. Si el código
 y la spec no coinciden, **el bug está en el código**. Toda decisión estructural
@@ -63,13 +63,13 @@ Consecuencias prácticas:
 
 ### Qué es y qué no es un icono AviVet
 
-| Es | No es |
-| --- | --- |
-| Dibujo técnico de manual veterinario | Caricatura o emoji |
-| Contorno legible a 16 px | Ilustración con detalle fino |
-| Anatómicamente correcto | "Un pollito simpático" |
-| Estático | Animado (las animaciones son CSS del consumidor) |
-| Monocromo, `currentColor` | Multicolor o con degradados |
+| Es                                   | No es                                            |
+| ------------------------------------ | ------------------------------------------------ |
+| Dibujo técnico de manual veterinario | Caricatura o emoji                               |
+| Contorno legible a 16 px             | Ilustración con detalle fino                     |
+| Anatómicamente correcto              | "Un pollito simpático"                           |
+| Estático                             | Animado (las animaciones son CSS del consumidor) |
+| Monocromo, `currentColor`            | Multicolor o con degradados                      |
 
 ---
 
@@ -78,44 +78,66 @@ Consecuencias prácticas:
 ```text
 avivet-icons/
 ├── ICON_SPEC.md              ← este documento: la fuente de verdad
-├── CONTRIBUTING.md
-├── README.md
-├── CHANGELOG.md
-├── LICENSE                   ← MIT
+├── CONTRIBUTING.md · README.md · CHANGELOG.md · LICENSE
 ├── design-tokens.json        ← única fuente de valores de presentación
-├── package.json              ← workspaces del monorepo
+├── package.json              ← raíz privada: toolchain y scripts
+├── pnpm-workspace.yaml
+├── tsconfig.base.json · tsconfig.json
+├── eslint.config.js · .prettierrc.json · svgo.config.ts · vitest.config.ts
+├── .husky/                   ← pre-commit (lint-staged) · pre-push (tipos + tests)
 │
 ├── packages/
 │   ├── core/                 @avivet/icons
 │   │   ├── src/
+│   │   │   ├── types.ts      ← el vocabulario del sistema
+│   │   │   ├── tokens.ts · geometry.ts · emit.ts · registry.ts · paths.ts
 │   │   │   ├── components/   ← EL LEGO. Geometría reutilizable.
 │   │   │   └── icons/        ← RECETAS. Un archivo por icono.
-│   │   │       └── <categoria>/<id>.icon.mjs
-│   │   └── svg/              ← GENERADO: <categoria>/<id>.svg
-│   ├── sprite/               @avivet/icons-sprite  → sprite.svg (GENERADO)
+│   │   │       └── <categoria>/<id>.icon.ts
+│   │   ├── svg/              ← GENERADO: <categoria>/<id>.svg
+│   │   └── dist/             ← GENERADO por Vite: ESM + .d.ts
 │   ├── react/                @avivet/icons-react   → src/Hen.tsx (GENERADO)
-│   ├── vue/                  @avivet/icons-vue     → src/Hen.vue (GENERADO)
-│   ├── json/                 @avivet/icons-json    → manifest.json (GENERADO)
-│   └── css/                  @avivet/icons-css     → avivet-icons.css (GENERADO)
+│   ├── docs/                 @avivet/icons-docs    → manifest.json (GENERADO)
+│   ├── sprite/               @avivet/icons-sprite  → sprite.svg (GENERADO)
+│   ├── css/                  @avivet/icons-css     → avivet-icons.css (GENERADO)
+│   └── vue/                  @avivet/icons-vue     → src/Hen.vue (GENERADO)
 │
-├── scripts/                  ← tokens · geometry · build · validate · new-icon
-├── tests/                    ← node:test, se ejecutan contra lo GENERADO
-├── website/                  ← fuente del sitio de documentación
-├── docs/                     ← GENERADO: sitio publicado (GitHub Pages)
+├── scripts/                  ← build · sketch · new-icon · optimize (SVGO)
+├── tests/                    ← Vitest, se ejecutan contra lo GENERADO
+├── website/                  ← sitio de documentación (Vite) → website/dist
 ├── examples/                 ← integraciones mínimas de referencia
-└── .github/workflows/        ← CI: validate + test + build en cada push
+└── .github/workflows/        ← CI: tipos + lint + formato + tests + Pages
 ```
+
+### Cadena de herramientas
+
+| Herramienta             | Para qué está                         | Por qué esa                                                         |
+| ----------------------- | ------------------------------------- | ------------------------------------------------------------------- |
+| **pnpm**                | Workspaces del monorepo               | Seis paquetes sin seis copias de nada                               |
+| **TypeScript**          | Tipar el dominio, no decorarlo        | `Shape`, `Anchors`, `IconRecipe`: una receta mal escrita no compila |
+| **Vite**                | Build de `core` y `react`, y el sitio | ESM + `.d.ts` sin configurar un bundler entero                      |
+| **Vitest**              | Las 23 comprobaciones de §11          | Ejecuta TypeScript sin paso de compilación previo                   |
+| **ESLint**              | El ADN aplicado al código             | Prohíbe colores literales en los dibujos, no solo en la salida      |
+| **Prettier**            | Formato                               | Deja de discutirse en los PR                                        |
+| **SVGO**                | Nivel 3 del flujo (§7.4)              | Acorta la trayectoria; configurado conservador en `svgo.config.ts`  |
+| **Husky + lint-staged** | Puertas locales                       | Lo que la CI iba a rechazar, rechazado antes de gastar un runner    |
+
+**El precio, dicho en voz alta:** este proyecto nació sin dependencias, y era una
+decisión defendible para una biblioteca pensada a diez años. La cadena de arriba
+se adopta a cambio de tipos en el dominio, formato automático y optimización
+real, pero introduce mantenimiento de dependencias donde antes no lo había. Es
+una decisión de arquitectura tomada a conciencia, no un accidente.
 
 ### Regla de oro de las carpetas
 
-Solo se editan a mano **cuatro** cosas:
+Solo se editan a mano **cinco** cosas:
 
 ```
-design-tokens.json · packages/core/src/** · website/** · la documentación
+design-tokens.json · packages/core/src/** · scripts/** · website/** · la documentación
 ```
 
-Todo lo demás (`packages/*/svg`, `sprite`, `react`, `vue`, `json`, `css`, `docs/`)
-es salida de `npm run build` y está declarado como generado en su encabezado.
+Todo lo demás (`packages/*/svg`, `sprite`, `react`, `vue`, `docs`, `css`, `website/dist`)
+es salida de `pnpm build` y está declarado como generado en su encabezado.
 Un PR que modifique un archivo generado sin modificar su fuente se rechaza.
 
 ---
@@ -128,36 +150,41 @@ el repositorio.
 
 ```jsonc
 {
-  "canvas":  { "size": 64, "padding": 4, "safeArea": { "min": 4, "max": 60 } },
-  "stroke":  { "width": 2, "linecap": "round", "linejoin": "round",
-               "color": "currentColor", "minGap": 4 },
-  "fill":    "none",
+  "canvas": { "size": 64, "padding": 4, "safeArea": { "min": 4, "max": 60 } },
+  "stroke": {
+    "width": 2,
+    "linecap": "round",
+    "linejoin": "round",
+    "color": "currentColor",
+    "minGap": 4,
+  },
+  "fill": "none",
   "keyline": { "square": 48, "circle": 46, "vertical": { "width": 20, "height": 52 } },
-  "eye":     { "radius": 1.25, "fill": "currentColor" },
+  "eye": { "radius": 1.25, "fill": "currentColor" },
   "anatomy": { "facing": "left" },
-  "budget":  { "maxSegments": 18, "maxBytes": 700 },
+  "budget": { "maxSegments": 18, "maxBytes": 700 },
   "precision": 2,
-  "sizes":   { "sm": 16, "md": 24, "lg": 32, "xl": 48, "xxl": 64 }
+  "sizes": { "sm": 16, "md": 24, "lg": 32, "xl": 48, "xxl": 64 },
 }
 ```
 
-| Token | Valor | Por qué |
-| --- | --- | --- |
-| `canvas.size` | 64 | Divisible por 2, 4, 8 y 16: la retícula cae en píxel entero a 16, 32 y 64 px. |
-| `canvas.padding` | 4 | Ningún trazo toca el borde. Área viva 4 → 60. |
-| `stroke.width` | 2 | Un solo grosor en toda la biblioteca. |
-| `stroke.linecap/join` | `round` | Sin excepciones. |
-| `stroke.color` | `currentColor` | Nunca un color fijo. |
-| `stroke.minGap` | 4 | Separación mínima entre trazos paralelos: por debajo se fusionan a 16 px. |
-| `eye.radius` | 1.25 | Única forma sólida de la biblioteca (§6). |
-| `precision` | 2 | Decimales máximos en las coordenadas emitidas. |
-| `anatomy.facing` | `left` | Dirección de **todas** las aves. La geometría se escribe una vez mirando a la derecha y el emisor la refleja: cambiar este token voltea la familia entera sin redibujar nada. |
-| `budget.maxSegments` | 18 | Techo de complejidad por icono (§11.21). |
-| `budget.maxBytes` | 700 | Techo de peso de la geometría emitida. |
+| Token                 | Valor          | Por qué                                                                                                                                                                       |
+| --------------------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `canvas.size`         | 64             | Divisible por 2, 4, 8 y 16: la retícula cae en píxel entero a 16, 32 y 64 px.                                                                                                 |
+| `canvas.padding`      | 4              | Ningún trazo toca el borde. Área viva 4 → 60.                                                                                                                                 |
+| `stroke.width`        | 2              | Un solo grosor en toda la biblioteca.                                                                                                                                         |
+| `stroke.linecap/join` | `round`        | Sin excepciones.                                                                                                                                                              |
+| `stroke.color`        | `currentColor` | Nunca un color fijo.                                                                                                                                                          |
+| `stroke.minGap`       | 4              | Separación mínima entre trazos paralelos: por debajo se fusionan a 16 px.                                                                                                     |
+| `eye.radius`          | 1.25           | Única forma sólida de la biblioteca (§6).                                                                                                                                     |
+| `precision`           | 2              | Decimales máximos en las coordenadas emitidas.                                                                                                                                |
+| `anatomy.facing`      | `left`         | Dirección de **todas** las aves. La geometría se escribe una vez mirando a la derecha y el emisor la refleja: cambiar este token voltea la familia entera sin redibujar nada. |
+| `budget.maxSegments`  | 18             | Techo de complejidad por icono (§11.21).                                                                                                                                      |
+| `budget.maxBytes`     | 700            | Techo de peso de la geometría emitida.                                                                                                                                        |
 
 ### El cambio de un solo archivo
 
-Cambiar `stroke.width` a `1.75` y ejecutar `npm run build` reescribe los 10 SVG,
+Cambiar `stroke.width` a `1.75` y ejecutar `pnpm build` reescribe los 10 SVG,
 el sprite, el CSS, los componentes React y Vue y el manifest. **Ningún archivo
 fuente cambia.** Ese es el criterio de aceptación del sistema de tokens.
 
@@ -171,7 +198,7 @@ Un token nuevo se añade solo si al menos dos componentes lo consumen.
 
 ```
 design-tokens.json     ─┐
-                        ├──►  scripts/build.mjs  ──►  artefactos
+                        ├──►  scripts/build.ts  ──►  artefactos
 packages/core/src/      │
   components/  (geometría, sin presentación)
   icons/       (composición)                    ─┘
@@ -234,10 +261,10 @@ rediseña el cuerpo del ave, las anclas se mueven y todas las piezas la siguen.
 
 ### 4.5 Dos familias de componentes
 
-| Familia | Devuelve | Ejemplos |
-| --- | --- | --- |
-| **Contorno** | `{ draw(pen), anchors }` — un fragmento de trayectoria que se encadena con otros | `head`, `body`, `neck` |
-| **Forma** | `Shape[]` — figuras independientes | `eye`, `beak`, `comb`, `wing`, `tail`, `leg`, `foot`, `drop`, `arrow`, `check`, `cross`, `warning`, `circle`, `rectangle` |
+| Familia      | Devuelve                                                                         | Ejemplos                                                                                                                  |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| **Contorno** | `{ draw(pen), anchors }` — un fragmento de trayectoria que se encadena con otros | `head`, `body`, `neck`                                                                                                    |
+| **Forma**    | `Shape[]` — figuras independientes                                               | `eye`, `beak`, `comb`, `wing`, `tail`, `leg`, `foot`, `drop`, `arrow`, `check`, `cross`, `warning`, `circle`, `rectangle` |
 
 Los componentes de contorno existen porque **la silueta de un ave es un único
 `<path>` cerrado** (§6). `head`, `neck` y `body` no son tres dibujos: son tres
@@ -266,32 +293,32 @@ Firma, ancla y regla de cada pieza. Ubicación:
 
 ### Anatomía aviar
 
-| Componente | Firma | Ancla | Regla |
-| --- | --- | --- | --- |
-| `head` | `head({ variant })` | — (inicia el contorno) | Tramo nuca → cráneo → base del pico → garganta. Variantes `adult`, `rooster` (cabeza más alta y erguida) y `chick`. Proporción cabeza/cuerpo: adulto ≈ 1:3, pollito ≈ 1:1.6. |
-| `body` | `body({ variant })` | — (continúa el contorno) | Tramo pecho → vientre → dorso → base de cola. Cuatro curvas Bézier, nunca líneas rectas. |
-| `neck` | `neck({ variant })` | — (cierra el contorno) | Tramo dorso → nuca. Cierra contra el punto inicial de `head`. |
-| `silhouette` | `silhouette({ variant })` | expone todas | Encadena `head + body + neck` en un `<path>` cerrado y publica las anclas. |
-| `eye` | `eye({ at })` | `anchors.eye` | Círculo sólido `r = tokens.eye.radius`. Única forma con relleno. Siempre en el tercio frontal-superior de la cabeza. |
-| `beak` | `beak({ at, scale })` | `anchors.beak` | Triángulo cerrado 6.5 × 5. Adulto `scale: 1`; pollito `scale: .85`. |
-| `comb` | `comb({ at, size })` | `anchors.crown` | Lo que va sobre la cabeza. `single` (gallina, 3 lóbulos) · `big` (gallo, 3 lóbulos y +80 % de altura) · `pea` (en guisante, líneas rústicas) · `tuft` (plumón del pollito, una pluma). |
-| `wattle` | `wattle({ at })` | `anchors.beak` | Lóbulo colgante. **Se omite** si queda a menos de `stroke.minGap` del cuello — por eso `hen` no la lleva y `rooster` sí. |
-| `wing` | `wing({ at, variant })` | `anchors.wing` | Arcos **abiertos**, jamás una hoja cerrada: una hoja cerrada dentro del cuerpo se lee como un segundo ojo. `adult` y `chick` llevan 2 arcos separados `minGap`; `simple` lleva 1, y solo sirve cuando hay otro trazo cerca que lo apoye — solo, se lee como una línea de vientre. |
-| `tail` | `tail({ at, variant })` | `anchors.tail` | Abanico de plumas, una curva por pluma, siempre abiertas. `hen` 3 plumas erguidas · `chick` 1 pluma mínima · `rooster` 2 hoces largas. |
-| `leg` | `leg({ at, length, foot })` | `anchors.legs[i]` | Tarso vertical. Adulto 6.5 · pollito 4.5. Compone `foot()` en el tobillo salvo `foot: false`. |
-| `foot` | `foot({ at, spread, toes })` | tobillo de `leg` | Dos dedos a ±`spread`. El tercer dedo central (`toes: 3`) se pierde a 16 px y solo suma trazo: se reserva para lienzos grandes. |
+| Componente   | Firma                        | Ancla                    | Regla                                                                                                                                                                                                                                                                             |
+| ------------ | ---------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `head`       | `head({ variant })`          | — (inicia el contorno)   | Tramo nuca → cráneo → base del pico → garganta. Variantes `adult`, `rooster` (cabeza más alta y erguida) y `chick`. Proporción cabeza/cuerpo: adulto ≈ 1:3, pollito ≈ 1:1.6.                                                                                                      |
+| `body`       | `body({ variant })`          | — (continúa el contorno) | Tramo pecho → vientre → dorso → base de cola. Cuatro curvas Bézier, nunca líneas rectas.                                                                                                                                                                                          |
+| `neck`       | `neck({ variant })`          | — (cierra el contorno)   | Tramo dorso → nuca. Cierra contra el punto inicial de `head`.                                                                                                                                                                                                                     |
+| `silhouette` | `silhouette({ variant })`    | expone todas             | Encadena `head + body + neck` en un `<path>` cerrado y publica las anclas.                                                                                                                                                                                                        |
+| `eye`        | `eye({ at })`                | `anchors.eye`            | Círculo sólido `r = tokens.eye.radius`. Única forma con relleno. Siempre en el tercio frontal-superior de la cabeza.                                                                                                                                                              |
+| `beak`       | `beak({ at, scale })`        | `anchors.beak`           | Triángulo cerrado 6.5 × 5. Adulto `scale: 1`; pollito `scale: .85`.                                                                                                                                                                                                               |
+| `comb`       | `comb({ at, size })`         | `anchors.crown`          | Lo que va sobre la cabeza. `single` (gallina, 3 lóbulos) · `big` (gallo, 3 lóbulos y +80 % de altura) · `pea` (en guisante, líneas rústicas) · `tuft` (plumón del pollito, una pluma).                                                                                            |
+| `wattle`     | `wattle({ at })`             | `anchors.beak`           | Lóbulo colgante. **Se omite** si queda a menos de `stroke.minGap` del cuello — por eso `hen` no la lleva y `rooster` sí.                                                                                                                                                          |
+| `wing`       | `wing({ at, variant })`      | `anchors.wing`           | Arcos **abiertos**, jamás una hoja cerrada: una hoja cerrada dentro del cuerpo se lee como un segundo ojo. `adult` y `chick` llevan 2 arcos separados `minGap`; `simple` lleva 1, y solo sirve cuando hay otro trazo cerca que lo apoye — solo, se lee como una línea de vientre. |
+| `tail`       | `tail({ at, variant })`      | `anchors.tail`           | Abanico de plumas, una curva por pluma, siempre abiertas. `hen` 3 plumas erguidas · `chick` 1 pluma mínima · `rooster` 2 hoces largas.                                                                                                                                            |
+| `leg`        | `leg({ at, length, foot })`  | `anchors.legs[i]`        | Tarso vertical. Adulto 6.5 · pollito 4.5. Compone `foot()` en el tobillo salvo `foot: false`.                                                                                                                                                                                     |
+| `foot`       | `foot({ at, spread, toes })` | tobillo de `leg`         | Dos dedos a ±`spread`. El tercer dedo central (`toes: 3`) se pierde a 16 px y solo suma trazo: se reserva para lienzos grandes.                                                                                                                                                   |
 
 ### Formas genéricas
 
-| Componente | Firma | Regla |
-| --- | --- | --- |
-| `egg` | `egg({ at, height })` | Ovoide aviar: asimétrico en el eje polar (agudo arriba, romo abajo) y simétrico en el transversal, como el huevo real. El ancla es el polo agudo. |
-| `drop` | `drop({ at, height })` | Punta arriba, base circular. Relación alto:ancho = 3:2. |
-| `arrow` | `arrow({ from, to, head })` | Asta recta + punta de 2 segmentos a 45°. |
-| `check` | `check({ at, size })` | 2 segmentos a 90°, brazo largo el doble del corto. |
-| `cross` | `cross({ at, size, rotate })` | Cruz sanitaria (`rotate: 0`) o aspa de descarte (`rotate: 45`). |
-| `warning` | `warning({ at })` | Círculo keyline + asta + punto sólido. |
-| `circle` | `circle({ at, r })` | Keyline circular por defecto: `r = keyline.circle / 2`. |
+| Componente  | Firma                                      | Regla                                                                                                                                                                                                 |
+| ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `egg`       | `egg({ at, height })`                      | Ovoide aviar: asimétrico en el eje polar (agudo arriba, romo abajo) y simétrico en el transversal, como el huevo real. El ancla es el polo agudo.                                                     |
+| `drop`      | `drop({ at, height })`                     | Punta arriba, base circular. Relación alto:ancho = 3:2.                                                                                                                                               |
+| `arrow`     | `arrow({ from, to, head })`                | Asta recta + punta de 2 segmentos a 45°.                                                                                                                                                              |
+| `check`     | `check({ at, size })`                      | 2 segmentos a 90°, brazo largo el doble del corto.                                                                                                                                                    |
+| `cross`     | `cross({ at, size, rotate })`              | Cruz sanitaria (`rotate: 0`) o aspa de descarte (`rotate: 45`).                                                                                                                                       |
+| `warning`   | `warning({ at })`                          | Círculo keyline + asta + punto sólido.                                                                                                                                                                |
+| `circle`    | `circle({ at, r })`                        | Keyline circular por defecto: `r = keyline.circle / 2`.                                                                                                                                               |
 | `rectangle` | `rectangle({ at, width, height, radius })` | Esquinas redondeadas; `radius` por defecto = `canvas.padding / 2`. Con `radius: 0` emite cuatro rectas: el `linejoin` redondo ya redondea las esquinas y así una tapa cuesta 3 segmentos en vez de 8. |
 
 Añadir un componente exige: entrada en esta tabla, geometría relativa a su ancla,
@@ -322,12 +349,12 @@ Reglas no negociables para todo icono de la categoría `animals`:
 
 ### Errores conocidos (aprendidos dibujando)
 
-| Error | Cómo se ve | Regla que lo evita |
-| --- | --- | --- |
-| Ala como hoja cerrada | Un segundo ojo flotando en el cuerpo | `wing` usa arcos abiertos |
-| Arco solitario bajo la cara del pollito | Una boca triste | El ala del pollito va retrasada, nunca bajo el ojo |
-| Barbilla pegada al cuello | Un borrón de tinta a 24 px | `stroke.minGap` = 4 px; si no cabe, la pieza se omite |
-| Asa del balde tangente a la boca | Un doble borde, no un asa | Comprobar `minGap` también entre curvas, no solo entre rectas |
+| Error                                   | Cómo se ve                           | Regla que lo evita                                            |
+| --------------------------------------- | ------------------------------------ | ------------------------------------------------------------- |
+| Ala como hoja cerrada                   | Un segundo ojo flotando en el cuerpo | `wing` usa arcos abiertos                                     |
+| Arco solitario bajo la cara del pollito | Una boca triste                      | El ala del pollito va retrasada, nunca bajo el ojo            |
+| Barbilla pegada al cuello               | Un borrón de tinta a 24 px           | `stroke.minGap` = 4 px; si no cabe, la pieza se omite         |
+| Asa del balde tangente a la boca        | Un doble borde, no un asa            | Comprobar `minGap` también entre curvas, no solo entre rectas |
 
 ---
 
@@ -335,7 +362,7 @@ Reglas no negociables para todo icono de la categoría `animals`:
 
 ### 7.1 Formato de receta
 
-`packages/core/src/icons/<categoria>/<id>.icon.mjs`:
+`packages/core/src/icons/<categoria>/<id>.icon.ts`:
 
 ```js
 import { silhouette, comb, beak, eye, wing, tail, leg } from '../../components/index.mjs';
@@ -380,11 +407,11 @@ Fijo, para que el apilamiento sea idéntico en toda la biblioteca:
 ### 7.3 Flujo de trabajo
 
 ```bash
-npm run new -- rooster animals   # crea la receta desde plantilla
+pnpm new -- rooster animals   # crea la receta desde plantilla
 # …editar la receta, componiendo piezas del catálogo…
-npm run build                    # genera todos los artefactos
-npm test                         # valida contra esta spec
-npm run preview                  # abre el sitio con retícula y prueba a 16 px
+pnpm build                    # genera todos los artefactos
+pnpm test                         # valida contra esta spec
+pnpm dev                  # abre el sitio con retícula y prueba a 16 px
 ```
 
 **Se revisa mirando, no leyendo.** Un icono que pasa los tests puede seguir
@@ -396,12 +423,12 @@ claro y oscuro.
 Ningún icono salta del encargo al sprite. Pasa por cuatro estados, y cada uno
 tiene su artefacto:
 
-| Nivel | Qué es | Herramienta | Se aprueba cuando |
-| --- | --- | --- | --- |
-| **1 · Boceto** | Hoja de construcción: el dibujo sobre su retícula, con área viva, keylines y la tira de tamaños | `npm run sketch -- <id>` → `.sketch/<id>.svg` | Se reconoce **a 16 px** y aguanta **a 128 px** |
-| **2 · SVG** | La receta compone piezas del catálogo y el emisor produce el `.svg` | `npm run build` | Los tests 1–20 pasan |
-| **3 · Optimización** | Redondeo a `precision`, y los presupuestos de segmentos y bytes | `npm test` | Los tests 21–23 pasan sin excepción injustificada |
-| **4 · Sprite** | Entra en `sprite.svg`, el CSS, React, Vue y el manifest | `npm run build` | `git diff --exit-code` limpio |
+| Nivel                | Qué es                                                                                          | Herramienta                                | Se aprueba cuando                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------ | ------------------------------------------------- |
+| **1 · Boceto**       | Hoja de construcción: el dibujo sobre su retícula, con área viva, keylines y la tira de tamaños | `pnpm sketch -- <id>` → `.sketch/<id>.svg` | Se reconoce **a 16 px** y aguanta **a 128 px**    |
+| **2 · SVG**          | La receta compone piezas del catálogo y el emisor produce el `.svg`                             | `pnpm build`                               | Los tests 1–20 pasan                              |
+| **3 · Optimización** | Redondeo a `precision`, y los presupuestos de segmentos y bytes                                 | `pnpm test`                                | Los tests 21–23 pasan sin excepción injustificada |
+| **4 · Sprite**       | Entra en `sprite.svg`, el CSS, React, Vue y el manifest                                         | `pnpm build`                               | `git diff --exit-code` limpio                     |
 
 ### 7.5 La regla de los dos extremos
 
@@ -429,16 +456,16 @@ a 16 px no sirve para nada, y uno simple a 128 px sigue siendo elegante.
 - El español y los sinónimos viven en `name_es` y `keywords`, nunca en el `id`.
 - Prefijo de espacio de nombres: `ai-`.
 
-| Categoría | Contenido | Ejemplos |
-| --- | --- | --- |
-| `animals` | Aves y sus estados | hen · rooster · chick · embryo |
-| `water` | Agua y bebida | drop · bucket · tank · nipple · bell |
-| `medical` | Sanidad, vacunación, registros clínicos | vaccine · medicine · clipboard · thermometer · clock |
-| `nutrition` | Materias primas y alimento | corn · soy · wheat · feed · silo |
-| `buildings` | Instalaciones y logística | barn · nest · truck · warehouse · feed-mill |
-| `biosecurity` | Bioseguridad y sanidad ambiental | virus · mask · boot · disinfection · sprayer |
-| `production` | Producción y datos | egg · egg-tray · scale · mortality |
-| `ui` | Interfaz y acciones | check · arrow · warning · search |
+| Categoría     | Contenido                               | Ejemplos                                             |
+| ------------- | --------------------------------------- | ---------------------------------------------------- |
+| `animals`     | Aves y sus estados                      | hen · rooster · chick · embryo                       |
+| `water`       | Agua y bebida                           | drop · bucket · tank · nipple · bell                 |
+| `medical`     | Sanidad, vacunación, registros clínicos | vaccine · medicine · clipboard · thermometer · clock |
+| `nutrition`   | Materias primas y alimento              | corn · soy · wheat · feed · silo                     |
+| `buildings`   | Instalaciones y logística               | barn · nest · truck · warehouse · feed-mill          |
+| `biosecurity` | Bioseguridad y sanidad ambiental        | virus · mask · boot · disinfection · sprayer         |
+| `production`  | Producción y datos                      | egg · egg-tray · scale · mortality                   |
+| `ui`          | Interfaz y acciones                     | check · arrow · warning · search                     |
 
 Renombrar un `id` publicado es un **breaking change** (§14).
 
@@ -449,18 +476,18 @@ Renombrar un `id` publicado es un **breaking change** (§14).
 Los metadatos viven **en la receta**, no en un archivo aparte: un icono es un
 objeto autocontenido.
 
-| Campo | Tipo | Obligatorio | Regla |
-| --- | --- | --- | --- |
-| `id` | string | ✔ | kebab-case, único, = nombre de archivo |
-| `name` | string | ✔ | Inglés, Title Case |
-| `name_es` | string | ✔ | Español, para el buscador |
-| `category` | string | ✔ | Una de §8 |
-| `keywords` | string[] | ✔ | ≥ 4, en ambos idiomas, sin repetir el `id` |
-| `since` | semver | ✔ | Versión en la que se publicó |
-| `taxon` | string | — | `bird` en las aves. `animals` también contiene cosas que no lo son, como el nido, y las reglas de anatomía solo aplican a las aves. |
-| `budget` | objeto | — | `{ maxSegments, maxBytes, reason }`. Sube el techo de §11.21–22 para **este** icono. Exige `reason`: una excepción sin justificar es complejidad que nadie decidió. |
-| `deprecated` | string | — | `id` del icono que lo reemplaza |
-| `draw` | función | ✔ | Pura, devuelve `Shape[]` |
+| Campo        | Tipo     | Obligatorio | Regla                                                                                                                                                               |
+| ------------ | -------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`         | string   | ✔           | kebab-case, único, = nombre de archivo                                                                                                                              |
+| `name`       | string   | ✔           | Inglés, Title Case                                                                                                                                                  |
+| `name_es`    | string   | ✔           | Español, para el buscador                                                                                                                                           |
+| `category`   | string   | ✔           | Una de §8                                                                                                                                                           |
+| `keywords`   | string[] | ✔           | ≥ 4, en ambos idiomas, sin repetir el `id`                                                                                                                          |
+| `since`      | semver   | ✔           | Versión en la que se publicó                                                                                                                                        |
+| `taxon`      | string   | —           | `bird` en las aves. `animals` también contiene cosas que no lo son, como el nido, y las reglas de anatomía solo aplican a las aves.                                 |
+| `budget`     | objeto   | —           | `{ maxSegments, maxBytes, reason }`. Sube el techo de §11.21–22 para **este** icono. Exige `reason`: una excepción sin justificar es complejidad que nadie decidió. |
+| `deprecated` | string   | —           | `id` del icono que lo reemplaza                                                                                                                                     |
+| `draw`       | función  | ✔           | Pura, devuelve `Shape[]`                                                                                                                                            |
 
 `packages/json/manifest.json` se genera a partir de estos campos y añade
 `viewBox`, `body` y `path`.
@@ -480,8 +507,8 @@ icons/       ───────┘                              ├─► pac
                                                    └─► docs/  (sitio)
 ```
 
-`scripts/build.mjs` es determinista: mismas fuentes ⇒ bytes idénticos. Por eso
-la CI puede ejecutar `npm run build && git diff --exit-code` y detectar
+`scripts/build.ts` es determinista: mismas fuentes ⇒ bytes idénticos. Por eso
+la CI puede ejecutar `pnpm build && git diff --exit-code` y detectar
 artefactos desincronizados.
 
 ### Formato de salida de un `.svg`
@@ -505,44 +532,44 @@ Reglas del emisor:
 
 ## 11. Validación y tests
 
-`npm test` ejecuta `node:test` sobre los artefactos generados. Un icono no
+`pnpm test` ejecuta `node:test` sobre los artefactos generados. Un icono no
 existe hasta que pasa **todas** estas comprobaciones:
 
 ### Contra los tokens
 
-| # | Comprobación | Fallo típico |
-| --- | --- | --- |
-| 1 | `viewBox` = `0 0 64 64` | Se dibujó en otro lienzo |
-| 2 | `stroke` = `currentColor` | Color quemado |
-| 3 | `stroke-width` = `tokens.stroke.width` | Grosor mixto |
-| 4 | `stroke-linecap` y `linejoin` = `round` | Remates cuadrados |
-| 5 | `fill` = `none` en la raíz | Silueta rellena |
-| 6 | Sin literales de color (`#hex`, `rgb()`, nombres CSS) | Verde quemado |
-| 7 | Sin `style=`, `class=`, `<image>`, `<text>` | SVG exportado de un editor |
-| 8 | Sin `id=` en el cuerpo | Colisión al inlinear |
+| #   | Comprobación                                          | Fallo típico               |
+| --- | ----------------------------------------------------- | -------------------------- |
+| 1   | `viewBox` = `0 0 64 64`                               | Se dibujó en otro lienzo   |
+| 2   | `stroke` = `currentColor`                             | Color quemado              |
+| 3   | `stroke-width` = `tokens.stroke.width`                | Grosor mixto               |
+| 4   | `stroke-linecap` y `linejoin` = `round`               | Remates cuadrados          |
+| 5   | `fill` = `none` en la raíz                            | Silueta rellena            |
+| 6   | Sin literales de color (`#hex`, `rgb()`, nombres CSS) | Verde quemado              |
+| 7   | Sin `style=`, `class=`, `<image>`, `<text>`           | SVG exportado de un editor |
+| 8   | Sin `id=` en el cuerpo                                | Colisión al inlinear       |
 
 ### De contenido
 
-| # | Comprobación | Fallo típico |
-| --- | --- | --- |
-| 9 | `<title>` presente y = `name` | Icono mudo para lectores de pantalla |
-| 10 | `role="img"` en la raíz | Sin semántica |
-| 11 | Relleno **solo** en el ojo (`circle`, `r ≤ 1.5`) | Se rellenó una forma |
-| 12 | Toda la geometría dentro del área viva 4 → 60 | El dibujo toca el borde |
-| 13 | `id` kebab-case, único, = nombre de archivo | Colisión en el sprite |
-| 14 | ≥ 4 `keywords`, en ambos idiomas | Icono no buscable |
-| 15 | `since` es semver válido | Historial roto |
+| #   | Comprobación                                     | Fallo típico                         |
+| --- | ------------------------------------------------ | ------------------------------------ |
+| 9   | `<title>` presente y = `name`                    | Icono mudo para lectores de pantalla |
+| 10  | `role="img"` en la raíz                          | Sin semántica                        |
+| 11  | Relleno **solo** en el ojo (`circle`, `r ≤ 1.5`) | Se rellenó una forma                 |
+| 12  | Toda la geometría dentro del área viva 4 → 60    | El dibujo toca el borde              |
+| 13  | `id` kebab-case, único, = nombre de archivo      | Colisión en el sprite                |
+| 14  | ≥ 4 `keywords`, en ambos idiomas                 | Icono no buscable                    |
+| 15  | `since` es semver válido                         | Historial roto                       |
 
 ### De presupuesto
 
 Un icono que crece en trazos deja de leerse a 16 px mucho antes de que se note
 a 64. Estos límites impiden que la complejidad se cuele sin que nadie la decida.
 
-| # | Comprobación | Fallo típico |
-| --- | --- | --- |
-| 21 | Segmentos ≤ `budget.maxSegments` (o el `budget` declarado en la receta) | El dibujo creció detalle a detalle |
-| 22 | Bytes de geometría ≤ `budget.maxBytes` | Curvas de más, decimales de más |
-| 23 | El sprite completo cabe en `maxBytes × nº de iconos` | La biblioteca engorda sin que nadie lo mire |
+| #   | Comprobación                                                            | Fallo típico                                |
+| --- | ----------------------------------------------------------------------- | ------------------------------------------- |
+| 21  | Segmentos ≤ `budget.maxSegments` (o el `budget` declarado en la receta) | El dibujo creció detalle a detalle          |
+| 22  | Bytes de geometría ≤ `budget.maxBytes`                                  | Curvas de más, decimales de más             |
+| 23  | El sprite completo cabe en `maxBytes × nº de iconos`                    | La biblioteca engorda sin que nadie lo mire |
 
 Una receta puede superar el techo global **solo** declarando `budget` con su
 `reason`, y con dos límites: la excepción no puede pasar del 150 % del techo, y
@@ -551,13 +578,13 @@ está mal simplificado, no es un objeto complejo.
 
 ### De sistema
 
-| # | Comprobación |
-| --- | --- |
-| 16 | El build es determinista (dos ejecuciones ⇒ bytes idénticos) |
-| 17 | Toda receta produce ≥ 1 figura |
-| 18 | El manifest y los `.svg` coinciden uno a uno |
-| 19 | Cada símbolo del sprite corresponde a un icono del manifest |
-| 20 | Existe componente React y Vue por cada icono |
+| #   | Comprobación                                                 |
+| --- | ------------------------------------------------------------ |
+| 16  | El build es determinista (dos ejecuciones ⇒ bytes idénticos) |
+| 17  | Toda receta produce ≥ 1 figura                               |
+| 18  | El manifest y los `.svg` coinciden uno a uno                 |
+| 19  | Cada símbolo del sprite corresponde a un icono del manifest  |
+| 20  | Existe componente React y Vue por cada icono                 |
 
 `stroke.minGap` (4 px entre trazos paralelos) **no se valida automáticamente**:
 requiere criterio. Es responsabilidad de la revisión visual del PR (§15).
@@ -568,11 +595,11 @@ requiere criterio. Es responsabilidad de la revisión visual del PR (§15).
 
 Un icono es decorativo o informativo, y **el consumidor decide cuál**:
 
-| Contexto | Salida |
-| --- | --- |
-| `.svg` suelto, sprite, Word, Canva | `role="img"` + `<title>` — el nombre se anuncia |
-| React / Vue sin prop `title` | `aria-hidden="true"` + `focusable="false"` — decorativo, el texto vecino ya lo dice |
-| React / Vue con prop `title` | `role="img"` + `<title>` + `aria-labelledby` |
+| Contexto                           | Salida                                                                              |
+| ---------------------------------- | ----------------------------------------------------------------------------------- |
+| `.svg` suelto, sprite, Word, Canva | `role="img"` + `<title>` — el nombre se anuncia                                     |
+| React / Vue sin prop `title`       | `aria-hidden="true"` + `focusable="false"` — decorativo, el texto vecino ya lo dice |
+| React / Vue con prop `title`       | `role="img"` + `<title>` + `aria-labelledby`                                        |
 
 Por eso `<title>` y `aria-hidden` no se contradicen: viven en artefactos
 distintos, para usos distintos.
@@ -585,21 +612,21 @@ tema claro y oscuro para que el problema sea visible.
 
 ## 13. Paquetes y consumo
 
-| Paquete | Qué entrega | Uso |
-| --- | --- | --- |
-| `@avivet/icons` | `svg/**` + recetas + componentes | Fuente, y SVG sueltos para Word/Canva |
-| `@avivet/icons-sprite` | `sprite.svg` | `<svg><use href="sprite.svg#ai-hen"/></svg>` |
-| `@avivet/icons-css` | `avivet-icons.css` | `<i class="ai ai-hen"></i>` — hereda color y tamaño del texto |
-| `@avivet/icons-react` | `Hen.tsx`, … | `<Hen size={24} title="Gallina" />` |
-| `@avivet/icons-vue` | `Hen.vue`, … | `<Hen :size="24" />` |
-| `@avivet/icons-json` | `manifest.json` | Buscadores, generadores, herramientas propias |
+| Paquete                | Qué entrega                      | Uso                                                           |
+| ---------------------- | -------------------------------- | ------------------------------------------------------------- |
+| `@avivet/icons`        | `svg/**` + recetas + componentes | Fuente, y SVG sueltos para Word/Canva                         |
+| `@avivet/icons-sprite` | `sprite.svg`                     | `<svg><use href="sprite.svg#ai-hen"/></svg>`                  |
+| `@avivet/icons-css`    | `avivet-icons.css`               | `<i class="ai ai-hen"></i>` — hereda color y tamaño del texto |
+| `@avivet/icons-react`  | `Hen.tsx`, …                     | `<Hen size={24} title="Gallina" />`                           |
+| `@avivet/icons-vue`    | `Hen.vue`, …                     | `<Hen :size="24" />`                                          |
+| `@avivet/icons-docs`   | `manifest.json`                  | Buscadores, generadores, herramientas propias                 |
 
 ### Contrato de los componentes de framework
 
 ```ts
 interface IconProps {
-  size?: number | string;   // por defecto tokens.sizes.md (24)
-  title?: string;           // si se pasa, el icono pasa a ser informativo
+  size?: number | string; // por defecto tokens.sizes.md (24)
+  title?: string; // si se pasa, el icono pasa a ser informativo
   className?: string;
   // el resto de props se reenvía al <svg>
 }
@@ -614,13 +641,13 @@ ser del token.
 
 Semver, sobre la **superficie pública** (ids, nombres de componentes, props):
 
-| Cambio | Versión |
-| --- | --- |
-| Iconos nuevos | minor |
-| Redibujo que mejora un icono sin cambiar su `id` | patch |
+| Cambio                                                     | Versión                           |
+| ---------------------------------------------------------- | --------------------------------- |
+| Iconos nuevos                                              | minor                             |
+| Redibujo que mejora un icono sin cambiar su `id`           | patch                             |
 | Cambio de un token de presentación (p. ej. `stroke.width`) | minor — cambia el aspecto de todo |
-| Renombrar o eliminar un `id`, cambiar una prop | **major** |
-| Corrección de metadatos o keywords | patch |
+| Renombrar o eliminar un `id`, cambiar una prop             | **major**                         |
+| Corrección de metadatos o keywords                         | patch                             |
 
 Un `id` nunca se borra de golpe: primero se marca `deprecated` apuntando al
 reemplazo, se mantiene una versión minor completa, y se elimina en la siguiente
@@ -629,11 +656,11 @@ major.
 ### Publicar una versión
 
 ```bash
-npm run build                      # 1. regenerar todos los artefactos
-npm test                           # 2. la suite completa en verde
+pnpm build                      # 1. regenerar todos los artefactos
+pnpm test                           # 2. la suite completa en verde
 git diff --exit-code               # 3. sin artefactos desincronizados
 # 4. anotar los cambios en CHANGELOG.md (Keep a Changelog)
-npm version <major|minor|patch>    # 5. sube la versión y crea el tag
+pnpm version <major|minor|patch>    # 5. sube la versión y crea el tag
 git push --follow-tags             # 6. la CI publica los paquetes y el sitio
 ```
 
@@ -644,10 +671,10 @@ misma versión. Un test lo comprueba.
 
 ## 15. Checklist de PR
 
-**Automático** (`npm test`, obligatorio en CI):
+**Automático** (`pnpm test`, obligatorio en CI):
 
 - [ ] Las 20 comprobaciones de §11 en verde
-- [ ] `git diff --exit-code` limpio tras `npm run build`
+- [ ] `git diff --exit-code` limpio tras `pnpm build`
 
 **Humano** (revisión visual, no automatizable):
 
@@ -668,19 +695,19 @@ cualquier miembro nuevo hereda su estilo sin decisiones nuevas. Terminada la
 familia de aves, una codorniz, un pato o un pavo son una variante de contorno
 más, no un dibujo desde cero.
 
-| Familia | Iconos | Estado |
-| --- | --- | --- |
-| **A · Animales** | hen · rooster · chick · egg · nest | ✅ |
-| **B · Agua** | drop · nipple · bell-drinker · bucket · flush | ⏳ falta `flush` |
-| **C · Sanidad** | vaccine-bottle · thermometer · clipboard · clock · check | ⏳ faltan `thermometer` y `check` |
+| Familia          | Iconos                                                   | Estado                            |
+| ---------------- | -------------------------------------------------------- | --------------------------------- |
+| **A · Animales** | hen · rooster · chick · egg · nest                       | ✅                                |
+| **B · Agua**     | drop · nipple · bell-drinker · bucket · flush            | ⏳ falta `flush`                  |
+| **C · Sanidad**  | vaccine-bottle · thermometer · clipboard · clock · check | ⏳ faltan `thermometer` y `check` |
 
-| Versión | Alcance | Estado |
-| --- | --- | --- |
-| v0.1 | Sistema de componentes + 10 iconos | ✅ |
-| v0.2 | Familia A completa · 25 iconos · `nutrition` y `buildings` | ⏳ |
-| v0.5 | 50 iconos · paquetes publicados en npm | ⏳ |
-| v1.0 | 100 iconos · sitio con búsqueda y descarga | ⏳ |
-| v2.0 | Escenas: composiciones de varios componentes (galpón en producción, cadena de frío de la vacuna) | ⏳ |
+| Versión | Alcance                                                                                          | Estado |
+| ------- | ------------------------------------------------------------------------------------------------ | ------ |
+| v0.1    | Sistema de componentes + 10 iconos                                                               | ✅     |
+| v0.2    | Familia A completa · 25 iconos · `nutrition` y `buildings`                                       | ⏳     |
+| v0.5    | 50 iconos · paquetes publicados en npm                                                           | ⏳     |
+| v1.0    | 100 iconos · sitio con búsqueda y descarga                                                       | ⏳     |
+| v2.0    | Escenas: composiciones de varios componentes (galpón en producción, cadena de frío de la vacuna) | ⏳     |
 
 **v2.0 es la razón de toda esta arquitectura.** Una escena no es un icono
 grande: es el mismo sistema de componentes ensamblado sobre un lienzo mayor.

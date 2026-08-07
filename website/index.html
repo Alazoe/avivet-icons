@@ -1,108 +1,142 @@
 <!doctype html>
 <html lang="es">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AviVet Icons — Open Source Poultry Design System</title>
-<meta name="description" content="Sistema de diseño e iconos SVG de código abierto para medicina veterinaria y producción avícola. Grid 64, trazo 2 px, currentColor, licencia MIT.">
-<link rel="stylesheet" href="preview.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AviVet Icons — Open Source Poultry Design System</title>
+    <meta
+      name="description"
+      content="Sistema de diseño e iconos SVG de código abierto para medicina veterinaria y producción avícola. Grid 64, trazo 2 px, currentColor, licencia MIT."
+    />
+    <link rel="stylesheet" href="./preview.css" />
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="wrap">
+        <p class="eyebrow">Open Source Poultry Design System</p>
+        <h1>AviVet Icons<span class="ver" id="ver">v0.1</span></h1>
+        <p class="lead">
+          Dibujos técnicos de manual veterinario, no caricaturas. Los iconos no se dibujan: se
+          <strong>ensamblan</strong> con componentes — el mismo ojo, el mismo pico, la misma pata —
+          sobre valores que viven en un único archivo de tokens.
+        </p>
+        <dl class="spec">
+          <div>
+            <dt>Grid</dt>
+            <dd>64 × 64</dd>
+          </div>
+          <div>
+            <dt>Trazo</dt>
+            <dd>2 px</dd>
+          </div>
+          <div>
+            <dt>Color</dt>
+            <dd>currentColor</dd>
+          </div>
+          <div>
+            <dt>Componentes</dt>
+            <dd>21</dd>
+          </div>
+          <div>
+            <dt>Iconos</dt>
+            <dd id="count">—</dd>
+          </div>
+          <div>
+            <dt>Licencia</dt>
+            <dd>MIT</dd>
+          </div>
+        </dl>
+      </div>
+    </header>
 
-<header class="masthead">
-  <div class="wrap">
-    <p class="eyebrow">Open Source Poultry Design System</p>
-    <h1>AviVet Icons<span class="ver" id="ver">v0.1</span></h1>
-    <p class="lead">Dibujos técnicos de manual veterinario, no caricaturas. Los iconos no se
-      dibujan: se <strong>ensamblan</strong> con componentes — el mismo ojo, el mismo pico, la
-      misma pata — sobre valores que viven en un único archivo de tokens.</p>
-    <dl class="spec">
-      <div><dt>Grid</dt><dd>64 × 64</dd></div>
-      <div><dt>Trazo</dt><dd>2 px</dd></div>
-      <div><dt>Color</dt><dd>currentColor</dd></div>
-      <div><dt>Componentes</dt><dd>20</dd></div>
-      <div><dt>Iconos</dt><dd id="count">—</dd></div>
-      <div><dt>Licencia</dt><dd>MIT</dd></div>
-    </dl>
-  </div>
-</header>
-
-<div class="toolbar">
-  <div class="wrap">
-    <input id="q" type="search" placeholder="Buscar: gallina, water, vacuna, bebedero…" autocomplete="off" aria-label="Buscar iconos">
-    <div class="group" id="cats" role="group" aria-label="Filtrar por categoría"></div>
-    <div class="group sizes" role="group" aria-label="Tamaño de previsualización">
-      <button class="chip" data-size="24">24</button>
-      <button class="chip" data-size="32">32</button>
-      <button class="chip" data-size="48" aria-pressed="true">48</button>
+    <div class="toolbar">
+      <div class="wrap">
+        <input
+          id="q"
+          type="search"
+          placeholder="Buscar: gallina, water, vacuna, bebedero…"
+          autocomplete="off"
+          aria-label="Buscar iconos"
+        />
+        <div class="group" id="cats" role="group" aria-label="Filtrar por categoría"></div>
+        <div class="group sizes" role="group" aria-label="Tamaño de previsualización">
+          <button class="chip" data-size="24">24</button>
+          <button class="chip" data-size="32">32</button>
+          <button class="chip" data-size="48" aria-pressed="true">48</button>
+        </div>
+        <button class="chip" id="gridToggle" aria-pressed="false">Retícula</button>
+      </div>
     </div>
-    <button class="chip" id="gridToggle" aria-pressed="false">Retícula</button>
-  </div>
-</div>
 
-<main class="wrap">
-  <h2>Biblioteca <span id="shown"></span></h2>
-  <div class="gallery" id="gallery"></div>
+    <main class="wrap">
+      <h2>Biblioteca <span id="shown"></span></h2>
+      <div class="gallery" id="gallery"></div>
 
-  <h2 style="margin-top:3.5rem">Prueba de legibilidad · 16 px y 128 px</h2>
-  <div class="ruler" id="ruler"></div>
+      <h2 style="margin-top: 3.5rem">Prueba de legibilidad · 16 px y 128 px</h2>
+      <div class="ruler" id="ruler"></div>
 
-  <h2 style="margin-top:3.5rem">Cómo se usa</h2>
-  <div class="usage">
-    <section>
-      <h3>Sprite</h3>
-      <p>Un solo archivo para toda la biblioteca.</p>
-      <pre>&lt;svg width="24" height="24"&gt;
+      <h2 style="margin-top: 3.5rem">Cómo se usa</h2>
+      <div class="usage">
+        <section>
+          <h3>Sprite</h3>
+          <p>Un solo archivo para toda la biblioteca.</p>
+          <pre>
+&lt;svg width="24" height="24"&gt;
   &lt;use href="sprite.svg#ai-hen"/&gt;
 &lt;/svg&gt;</pre>
-    </section>
-    <section>
-      <h3>CSS</h3>
-      <p>Hereda color y tamaño del texto que lo rodea.</p>
-      <pre>&lt;link rel="stylesheet"
+        </section>
+        <section>
+          <h3>CSS</h3>
+          <p>Hereda color y tamaño del texto que lo rodea.</p>
+          <pre>
+&lt;link rel="stylesheet"
       href="avivet-icons.css"&gt;
 
 &lt;i class="ai ai-hen"&gt;&lt;/i&gt;</pre>
-    </section>
-    <section>
-      <h3>React</h3>
-      <p>Decorativo por defecto; con <code>title</code> pasa a anunciarse.</p>
-      <pre>import { Hen } from '@avivet/icons-react'
+        </section>
+        <section>
+          <h3>React</h3>
+          <p>Decorativo por defecto; con <code>title</code> pasa a anunciarse.</p>
+          <pre>
+import { Hen } from '@avivet/icons-react'
 
 &lt;Hen size={24} /&gt;
 &lt;Hen title="Gallina" /&gt;</pre>
-    </section>
-    <section>
-      <h3>Vue</h3>
-      <p>Mismo contrato de props que React.</p>
-      <pre>import { Hen } from '@avivet/icons-vue'
+        </section>
+        <section>
+          <h3>Vue</h3>
+          <p>Mismo contrato de props que React.</p>
+          <pre>
+import { Hen } from '@avivet/icons-vue'
 
 &lt;Hen :size="24" /&gt;</pre>
-    </section>
-    <section>
-      <h3>SVG suelto</h3>
-      <p>Para Word, PowerPoint o Canva.</p>
-      <pre>packages/core/svg/animals/hen.svg</pre>
-    </section>
-    <section>
-      <h3>JSON</h3>
-      <p>Para construir tus propias herramientas.</p>
-      <pre>import m from '@avivet/icons-json'
+        </section>
+        <section>
+          <h3>SVG suelto</h3>
+          <p>Para Word, PowerPoint o Canva.</p>
+          <pre>packages/core/svg/animals/hen.svg</pre>
+        </section>
+        <section>
+          <h3>JSON</h3>
+          <p>Para construir tus propias herramientas.</p>
+          <pre>
+import m from '@avivet/icons-json'
 
 m.icons.find(i =&gt; i.id === 'hen')</pre>
-    </section>
-  </div>
-</main>
+        </section>
+      </div>
+    </main>
 
-<footer class="wrap">
-  <p>AviVet Icons · licencia MIT · hecho para producción avícola.
-     Haz clic en cualquier icono para copiar su SVG.
-     Las reglas del sistema están en <code>ICON_SPEC.md</code>.</p>
-</footer>
+    <footer class="wrap">
+      <p>
+        AviVet Icons · licencia MIT · hecho para producción avícola. Haz clic en cualquier icono
+        para copiar su SVG. Las reglas del sistema están en <code>ICON_SPEC.md</code>.
+      </p>
+    </footer>
 
-<div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
 
-<script src="icons.js"></script>
-<script src="search.js"></script>
-</body>
+    <script type="module" src="./icons.js"></script>
+    <script type="module" src="./search.js"></script>
+  </body>
 </html>

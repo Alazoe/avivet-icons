@@ -7,7 +7,7 @@
 Iconos SVG de dibujo técnico para medicina veterinaria y producción avícola.
 
 [![licencia MIT](https://img.shields.io/badge/licencia-MIT-1D5C8F)](LICENSE)
-[![versión 0.2.0](https://img.shields.io/badge/versión-0.2.0-1D5C8F)](CHANGELOG.md)
+[![versión 0.2.0](https://img.shields.io/badge/versión-0.3.0-1D5C8F)](CHANGELOG.md)
 [![12 iconos](https://img.shields.io/badge/iconos-12-1D5C8F)](#iconos)
 [![Node ≥ 20](https://img.shields.io/badge/node-%E2%89%A5%2020-1D5C8F)](package.json)
 
@@ -54,7 +54,7 @@ draw() {
 ```
 
 Cambiar `stroke.width` a `1.75` en `design-tokens.json` y ejecutar
-`npm run build` reescribe los 12 SVG, el sprite, el CSS y los componentes React
+`pnpm build` reescribe los 12 SVG, el sprite, el CSS y los componentes React
 y Vue. **Ningún archivo fuente cambia.** Ese es el criterio de aceptación del
 sistema.
 
@@ -62,15 +62,15 @@ sistema.
 
 ## El sistema en seis valores
 
-| | |
-| --- | --- |
-| Grid | 64 × 64 px, sin excepciones |
-| Dirección | Las aves miran a la izquierda (`anatomy.facing`) |
-| Zona segura | 4 px — ningún trazo toca el borde |
-| Trazo | 2 px, `linecap` y `linejoin` `round` |
-| Relleno | `none` (la única forma sólida es el ojo, r 1.25) |
-| Color | `currentColor` — nunca un color fijo |
-| Curvas | Bézier; las quiebras solo si son anatómicas |
+|             |                                                  |
+| ----------- | ------------------------------------------------ |
+| Grid        | 64 × 64 px, sin excepciones                      |
+| Dirección   | Las aves miran a la izquierda (`anatomy.facing`) |
+| Zona segura | 4 px — ningún trazo toca el borde                |
+| Trazo       | 2 px, `linecap` y `linejoin` `round`             |
+| Relleno     | `none` (la única forma sólida es el ojo, r 1.25) |
+| Color       | `currentColor` — nunca un color fijo             |
+| Curvas      | Bézier; las quiebras solo si son anatómicas      |
 
 Todos viven en [`design-tokens.json`](design-tokens.json). Las reglas completas,
 en [`ICON_SPEC.md`](ICON_SPEC.md).
@@ -82,13 +82,13 @@ en [`ICON_SPEC.md`](ICON_SPEC.md).
 ### Sprite — un archivo para toda la biblioteca
 
 ```html
-<svg width="24" height="24"><use href="sprite.svg#ai-hen"/></svg>
+<svg width="24" height="24"><use href="sprite.svg#ai-hen" /></svg>
 ```
 
 ### CSS — hereda color y tamaño del texto
 
 ```html
-<link rel="stylesheet" href="avivet-icons.css">
+<link rel="stylesheet" href="avivet-icons.css" />
 
 <i class="ai ai-hen"></i>
 <i class="ai ai-size-lg ai-vaccine-bottle" style="color:#0F6B4F"></i>
@@ -123,7 +123,7 @@ Para Word, PowerPoint, Canva o Illustrator: toma el archivo de
 ### JSON
 
 ```js
-import manifest from '@avivet/icons-json';
+import manifest from '@avivet/icons-docs';
 
 const hen = manifest.icons.find((i) => i.id === 'hen');
 el.innerHTML = `<svg viewBox="${hen.viewBox}" fill="none" stroke="currentColor"
@@ -134,35 +134,35 @@ el.innerHTML = `<svg viewBox="${hen.viewBox}" fill="none" stroke="currentColor"
 
 ## Paquetes
 
-| Paquete | Contenido |
-| --- | --- |
-| `@avivet/icons` | Componentes, recetas y SVG |
-| `@avivet/icons-sprite` | `sprite.svg` |
-| `@avivet/icons-css` | Hoja CSS con máscaras |
-| `@avivet/icons-json` | `manifest.json` |
-| `@avivet/icons-react` | Componentes React tipados |
-| `@avivet/icons-vue` | Componentes Vue 3 |
+| Paquete                | Contenido                  |
+| ---------------------- | -------------------------- |
+| `@avivet/icons`        | Componentes, recetas y SVG |
+| `@avivet/icons-sprite` | `sprite.svg`               |
+| `@avivet/icons-css`    | Hoja CSS con máscaras      |
+| `@avivet/icons-docs`   | `manifest.json`            |
+| `@avivet/icons-react`  | Componentes React tipados  |
+| `@avivet/icons-vue`    | Componentes Vue 3          |
 
 ---
 
 ## Iconos
 
-**12 iconos · v0.2.0**
+**12 iconos · v0.3.0**
 
-| Icono | `id` | Categoría |
-| --- | --- | --- |
-| Gallina | `hen` | animals |
-| Gallo | `rooster` | animals |
-| Pollito | `chick` | animals |
-| Nido | `nest` | animals |
-| Gota de agua | `water-drop` | water |
-| Balde | `bucket` | water |
-| Bebedero nipple | `nipple-drinker` | water |
-| Bebedero campana | `bell-drinker` | water |
-| Frasco de vacuna | `vaccine-bottle` | medical |
-| Planilla de registro | `clipboard` | medical |
-| Reloj | `clock` | medical |
-| Huevo | `egg` | production |
+| Icono                | `id`             | Categoría  |
+| -------------------- | ---------------- | ---------- |
+| Gallina              | `hen`            | animals    |
+| Gallo                | `rooster`        | animals    |
+| Pollito              | `chick`          | animals    |
+| Nido                 | `nest`           | animals    |
+| Gota de agua         | `water-drop`     | water      |
+| Balde                | `bucket`         | water      |
+| Bebedero nipple      | `nipple-drinker` | water      |
+| Bebedero campana     | `bell-drinker`   | water      |
+| Frasco de vacuna     | `vaccine-bottle` | medical    |
+| Planilla de registro | `clipboard`      | medical    |
+| Reloj                | `clock`          | medical    |
+| Huevo                | `egg`            | production |
 
 Categorías previstas: `animals` · `water` · `medical` · `nutrition` ·
 `buildings` · `biosecurity` · `production` · `ui`.
@@ -172,45 +172,50 @@ Categorías previstas: `animals` · `water` · `medical` · `nutrition` ·
 ## Desarrollo
 
 ```bash
-npm install
-npm test             # build + las 23 comprobaciones de la especificación
-npm run build        # regenera todos los artefactos
-npm run new -- pullet animals
-npm run sketch -- hen  # hoja de construcción: retícula + tira 16→128 px
-npm run preview        # sitio con buscador, retícula y prueba a 16 y 128 px
+pnpm install
+pnpm test             # build + las 23 comprobaciones de la especificación
+pnpm build        # regenera todos los artefactos
+pnpm new -- pullet animals
+pnpm sketch -- hen  # hoja de construcción: retícula + tira 16→128 px
+pnpm dev        # sitio con buscador, retícula y prueba a 16 y 128 px
 ```
 
-Sin dependencias de terceros. Sin bundler. Solo Node ≥ 20 — a propósito: una
-biblioteca de iconos que necesita mantenimiento de dependencias no dura años.
+Monorepo pnpm con TypeScript, Vite, Vitest, ESLint, Prettier, SVGO y Husky.
+`pnpm verify` corre exactamente lo mismo que la CI: tipos, lint, formato y las
+23 comprobaciones de la especificación.
+
+Los paquetes publicables **no arrastran toolchain**: `@avivet/icons` se publica
+como ESM más `.d.ts`, y el resto son archivos estáticos.
 
 ### Estructura
 
 ```text
 design-tokens.json          ← valores de presentación (única fuente)
 packages/core/src/
-  components/               ← EL LEGO: 20 piezas reutilizables
-  icons/<categoría>/*.icon.mjs  ← RECETAS: composición + metadatos
+  types.ts                  ← el vocabulario del sistema
+  components/               ← EL LEGO: 21 piezas reutilizables
+  icons/<categoría>/*.icon.ts   ← RECETAS: composición + metadatos
 packages/core/svg/          ← generado
-packages/{sprite,css,json,react,vue}/  ← generado
-scripts/                    ← tokens · geometry · emit · registry · build
-tests/                      ← node:test contra los artefactos generados
-website/ → docs/            ← sitio de documentación (fuente → publicado)
+packages/{react,docs,sprite,css,vue}/  ← generado
+scripts/                    ← build · sketch · new-icon · optimize (SVGO)
+tests/                      ← Vitest contra los artefactos generados
+website/ → website/dist     ← sitio de documentación (Vite)
 ```
 
 Solo se edita a mano: `design-tokens.json`, `packages/core/src/`, `website/` y
-la documentación. Todo lo demás sale de `npm run build`.
+la documentación. Todo lo demás sale de `pnpm build`.
 
 ---
 
 ## Hoja de ruta
 
-| Versión | Alcance | Estado |
-| --- | --- | --- |
-| v0.1 | Sistema de componentes + 10 iconos | ✅ |
-| v0.2 | Familia de animales completa · 25 iconos | ⏳ en curso |
-| v0.5 | 50 iconos · publicación en npm | ⏳ |
-| v1.0 | 100 iconos | ⏳ |
-| v2.0 | Escenas: composiciones sobre lienzo mayor | ⏳ |
+| Versión | Alcance                                   | Estado      |
+| ------- | ----------------------------------------- | ----------- |
+| v0.1    | Sistema de componentes + 10 iconos        | ✅          |
+| v0.2    | Familia de animales completa · 25 iconos  | ⏳ en curso |
+| v0.5    | 50 iconos · publicación en npm            | ⏳          |
+| v1.0    | 100 iconos                                | ⏳          |
+| v2.0    | Escenas: composiciones sobre lienzo mayor | ⏳          |
 
 ---
 

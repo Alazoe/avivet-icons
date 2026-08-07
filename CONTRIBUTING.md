@@ -20,26 +20,31 @@ contradicen, gana la especificación y esta guía tiene un bug.
 ```bash
 git clone https://github.com/Alazoe/avivet-icons.git
 cd avivet-icons
-npm install          # sin dependencias de terceros: solo enlaza los workspaces
-npm test             # debe quedar todo en verde antes de tocar nada
-npm run preview      # abre el sitio de documentación
+pnpm install          # sin dependencias de terceros: solo enlaza los workspaces
+pnpm test             # debe quedar todo en verde antes de tocar nada
+pnpm dev      # abre el sitio de documentación
 ```
 
-Requisitos: **Node ≥ 20**. Nada más. Sin bundler, sin framework, sin
-dependencias de producción — a propósito: una biblioteca de iconos que necesita
-mantenimiento de dependencias no dura años.
+Requisitos: **Node ≥ 20** y **pnpm ≥ 10**.
+
+`pnpm install` deja instalados los ganchos de git: al hacer commit se pasan
+ESLint y Prettier sobre lo que has tocado, y al hacer push se comprueban tipos y
+tests. Si algo te bloquea, es lo mismo que te habría rechazado la CI.
+
+Los paquetes publicables no tienen dependencias de producción: el toolchain vive
+en la raíz y no viaja al consumidor.
 
 ---
 
 ## Qué puedes aportar
 
-| Tipo | Dónde empezar |
-| --- | --- |
-| **Icono nuevo** | Abre primero un issue con la plantilla *Icon request*: hablamos del nombre y la categoría antes de dibujar |
-| **Mejorar un icono** | Si se lee mal a 16 px, es un bug. Adjunta una captura al PR |
-| **Componente nuevo** | Solo si ya hay dos iconos que lo necesitan (§4.6, regla de las dos apariciones) |
-| **Traducciones** | `name_es` y `keywords` en las recetas |
-| **Documentación** | Este archivo, `README.md` y el sitio en `website/` |
+| Tipo                 | Dónde empezar                                                                                              |
+| -------------------- | ---------------------------------------------------------------------------------------------------------- |
+| **Icono nuevo**      | Abre primero un issue con la plantilla _Icon request_: hablamos del nombre y la categoría antes de dibujar |
+| **Mejorar un icono** | Si se lee mal a 16 px, es un bug. Adjunta una captura al PR                                                |
+| **Componente nuevo** | Solo si ya hay dos iconos que lo necesitan (§4.6, regla de las dos apariciones)                            |
+| **Traducciones**     | `name_es` y `keywords` en las recetas                                                                      |
+| **Documentación**    | Este archivo, `README.md` y el sitio en `website/`                                                         |
 
 Iconos que **no** aceptamos: caricaturas, emoji, logotipos de marcas, iconos
 multicolor, iconos animados y cualquier cosa que se vea bien solo a 64 px.
@@ -51,7 +56,7 @@ multicolor, iconos animados y cualquier cosa que se vea bien solo a 64 px.
 ### 1. Crea la receta
 
 ```bash
-npm run new -- rooster animals
+pnpm new -- rooster animals
 ```
 
 Esto crea `packages/core/src/icons/animals/rooster.icon.mjs` con la plantilla
@@ -98,7 +103,7 @@ busca por `id`). Piensa en cómo lo buscaría alguien que no conoce la bibliotec
 ### 4. Construye y valida
 
 ```bash
-npm test        # build + las 23 comprobaciones de la spec
+pnpm test        # build + las 23 comprobaciones de la spec
 ```
 
 ### 5. Mira el icono
@@ -107,8 +112,8 @@ Esto no lo hace ningún test. Los cuatro niveles de `ICON_SPEC.md` §7.4 empieza
 aquí, y el Nivel 1 no se salta:
 
 ```bash
-npm run sketch -- rooster   # hoja de construcción: retícula + tira 16→128 px
-npm run preview             # la biblioteca completa, en contexto
+pnpm sketch -- rooster   # hoja de construcción: retícula + tira 16→128 px
+pnpm dev             # la biblioteca completa, en contexto
 ```
 
 - ¿Se reconoce **a 16 px** sin leer la etiqueta? ¿Aguanta **a 128 px**?
@@ -135,13 +140,13 @@ Añade una línea a `CHANGELOG.md` que explique **por qué**, no solo qué:
 
 No los repitas. Están en `ICON_SPEC.md` §6 y se ganaron dibujando:
 
-| Error | Cómo se ve | Regla |
-| --- | --- | --- |
-| Ala como hoja cerrada | Un segundo ojo flotando en el cuerpo | `wing` usa arcos abiertos |
-| Arco solitario bajo la cara del pollito | Una boca triste | El ala del pollito va retrasada |
-| Barbilla pegada al cuello | Un borrón a 24 px | 4 px de separación mínima, o se omite la pieza |
-| Asa tangente al borde del balde | Un doble borde, no un asa | El `minGap` también aplica entre curvas |
-| Círculos superpuestos para cabeza y cuerpo | Un muñeco de nieve | La silueta es un único `<path>` cerrado |
+| Error                                      | Cómo se ve                           | Regla                                          |
+| ------------------------------------------ | ------------------------------------ | ---------------------------------------------- |
+| Ala como hoja cerrada                      | Un segundo ojo flotando en el cuerpo | `wing` usa arcos abiertos                      |
+| Arco solitario bajo la cara del pollito    | Una boca triste                      | El ala del pollito va retrasada                |
+| Barbilla pegada al cuello                  | Un borrón a 24 px                    | 4 px de separación mínima, o se omite la pieza |
+| Asa tangente al borde del balde            | Un doble borde, no un asa            | El `minGap` también aplica entre curvas        |
+| Círculos superpuestos para cabeza y cuerpo | Un muñeco de nieve                   | La silueta es un único `<path>` cerrado        |
 
 ---
 
@@ -152,8 +157,8 @@ fuente se cierra:
 
 ```
 packages/core/svg/**    packages/sprite/**    packages/css/**
-packages/json/**        packages/react/src/** packages/vue/src/**
-docs/**
+packages/docs/**        packages/react/src/** packages/vue/src/**
+packages/*/dist/**      website/dist/**       website/icons.js
 ```
 
 Si algo está mal ahí, el bug está en `packages/core/src/`, en
@@ -173,10 +178,11 @@ Si algo está mal ahí, el bug está en `packages/core/src/`, en
 
 ## Estilo de código
 
-- ES modules, Node ≥ 20, sin transpilar.
-- Sin dependencias de terceros en `packages/` ni en `scripts/`.
+- TypeScript estricto. Los tipos del dominio están en `packages/core/src/types.ts`.
+- Sin dependencias de **producción** en los paquetes publicables.
+- `pnpm verify` antes de abrir el PR: es lo que corre la CI.
 - Comentarios **en español**, código y nombres **en inglés**.
-- Un comentario explica *por qué*, no *qué*. Si el qué no se entiende, el
+- Un comentario explica _por qué_, no _qué_. Si el qué no se entiende, el
   problema es el nombre de la función.
 
 ---
@@ -194,8 +200,8 @@ chore(tokens): sube la precision a 2 decimales
 
 Un PR entra cuando:
 
-- [ ] `npm test` en verde (lo comprueba la CI)
-- [ ] `git diff --exit-code` limpio tras `npm run build`
+- [ ] `pnpm test` en verde (lo comprueba la CI)
+- [ ] `git diff --exit-code` limpio tras `pnpm build`
 - [ ] Captura a 16/24/48 px adjunta
 - [ ] Checklist humano de `ICON_SPEC.md` §15 repasado
 - [ ] Entrada en el `CHANGELOG`

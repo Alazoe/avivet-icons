@@ -6,35 +6,53 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  NODE_VERSION: 20
+
 jobs:
-  test:
+  verify:
     name: Especificación
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
 
       - name: Instalar
-        run: npm install
+        run: pnpm install --frozen-lockfile
+
+      - name: Tipos
+        run: pnpm run typecheck
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Formato
+        run: pnpm run format:check
 
       - name: Build + las 23 comprobaciones de ICON_SPEC.md §11
-        run: npm test
+        run: pnpm run test
 
       # El build es determinista: si los artefactos generados no coinciden con
       # las fuentes, alguien edito un archivo generado a mano.
       - name: Artefactos sincronizados con la fuente
         run: |
           if ! git diff --exit-code; then
-            echo "::error::Hay artefactos desincronizados. Ejecuta 'npm run build' y vuelve a commitear."
+            echo "::error::Hay artefactos desincronizados. Ejecuta 'pnpm build' y vuelve a commitear."
             exit 1
           fi
 
+      - name: Build de los paquetes publicables
+        run: pnpm run build:packages
+
   pages:
     name: Publicar el sitio
-    needs: test
+    needs: verify
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     permissions:
@@ -45,13 +63,16 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-      - run: npm install && npm run build
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run build:site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: docs
+          path: website/dist
       - id: deploy
         uses: actions/deploy-pages@v4

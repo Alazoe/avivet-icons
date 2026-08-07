@@ -1,7 +1,7 @@
 name: Icono nuevo
 description: Proponer un icono para la biblioteca
-title: "[icon] "
-labels: ["icono"]
+title: '[icon] '
+labels: ['icono']
 body:
   - type: markdown
     attributes:

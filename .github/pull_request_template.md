@@ -11,8 +11,8 @@
 <!-- OBLIGATORIO para cualquier cambio visual. Un icono sin captura no se revisa. -->
 
 | 16 px | 24 px | 48 px |
-| --- | --- | --- |
-|  |  |  |
+| ----- | ----- | ----- |
+|       |       |       |
 
 Tema claro / tema oscuro:
 

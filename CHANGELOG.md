@@ -3,6 +3,55 @@
 Formato [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) ·
 versionado semántico sobre la superficie pública (`ICON_SPEC.md` §14).
 
+## [0.3.0] — 2026-08-06
+
+Reestructuración de la arquitectura del repositorio a monorepo pnpm con
+TypeScript. **No se dibujaron iconos en esta versión**: es andamiaje.
+
+### Añadido
+
+- **pnpm workspaces** con seis paquetes publicables: `@avivet/icons`,
+  `-react`, `-docs`, `-sprite`, `-css` y `-vue`, más `website`.
+- **TypeScript estricto**. `packages/core/src/types.ts` define el vocabulario
+  del sistema: `Shape`, `Anchors`, `ContourPart`, `IconRecipe`, `IconBudget`.
+  Una receta mal escrita ya no compila.
+- **Vite** para el build de biblioteca de `core` y `react` (ESM + `.d.ts`) y
+  para el sitio de documentación.
+- **Vitest** en lugar de `node:test`. Las 23 comprobaciones intactas.
+- **ESLint** con reglas propias del ADN: prohíbe colores literales y
+  `currentColor` escrito a mano dentro de los dibujos.
+- **Prettier**, **Husky** (pre-commit con lint-staged, pre-push con tipos y
+  tests) y **SVGO** integrado como Nivel 3 del flujo.
+- `pnpm verify` — tipos, lint, formato y tests: exactamente lo que corre la CI.
+- Test **16b**: SVGO tiene que ser idempotente sobre nuestra salida, o el build
+  dejaría de ser determinista al encadenar dos optimizaciones.
+
+### Cambiado
+
+- `packages/json` pasa a llamarse **`packages/docs`** (`@avivet/icons-docs`).
+- `tokens`, `geometry`, `emit` y `registry` se mudan de `scripts/` a
+  `packages/core/src/`: eran biblioteca, no herramientas de build.
+- El sitio se compila con Vite a `website/dist`; desaparece la carpeta `docs/`
+  de la raíz, que se confundía con el paquete del mismo nombre.
+- Los SVG generados pasan por SVGO: 265 bytes menos en 12 iconos.
+
+### Decisiones
+
+- **Se revierte "sin dependencias de terceros"**, que era una decisión
+  documentada del proyecto. Se cambia por tipos en el dominio, formato
+  automático y optimización real. El coste es mantenimiento de dependencias, y
+  queda escrito en ICON_SPEC.md §2 para que nadie lo descubra por sorpresa.
+- **Se descartó una regla de ESLint** que prohibía el literal `2` en los
+  dibujos para forzar el uso del token de grosor: un selector de AST no
+  distingue un 2 de grosor de un `width / 2` de geometría. Esa garantía la da
+  el test §3, que comprueba el grosor *emitido*.
+- **`optimize.ts` vive en `scripts/`, no en `core`.** SVGO es herramienta de
+  build y no debe viajar en el paquete publicado.
+- Los 12 iconos existentes se **migraron**, no se borraron: "no crear iconos
+  todavía" se entendió como que este paso era de andamiaje.
+
+---
+
 ## [0.2.1] — 2026-08-06
 
 ### Cambiado

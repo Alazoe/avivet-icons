@@ -1,0 +1,24 @@
+{
+  "name": "@avivet/icons-docs",
+  "version": "0.3.0",
+  "license": "MIT",
+  "author": "Andres Lazo",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Alazoe/avivet-icons.git"
+  },
+  "homepage": "https://avivet.cl/avivet-icons/",
+  "description": "Metadatos y manifest de AviVet Icons: nombres, categorias y keywords",
+  "type": "module",
+  "main": "./manifest.json",
+  "exports": {
+    ".": "./manifest.json",
+    "./manifest.json": "./manifest.json"
+  },
+  "files": [
+    "manifest.json"
+  ]
+}

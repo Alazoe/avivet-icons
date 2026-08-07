@@ -1,0 +1,12 @@
+# Artefactos generados: los produce el build, no se formatean.
+packages/core/svg/
+packages/sprite/sprite.svg
+packages/css/avivet-icons.css
+packages/docs/manifest.json
+packages/react/src/
+packages/vue/src/
+website/dist/
+website/icons.js
+.sketch/
+pnpm-lock.yaml
+CHANGELOG.md

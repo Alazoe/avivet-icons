@@ -1,6 +1,6 @@
 {
   "name": "@avivet/icons-vue",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "license": "MIT",
   "author": "Andres Lazo",
   "publishConfig": {
@@ -10,8 +10,10 @@
     "type": "git",
     "url": "https://github.com/Alazoe/avivet-icons.git"
   },
+  "homepage": "https://avivet.cl/avivet-icons/",
   "description": "Componentes Vue de AviVet Icons",
-  "main": "src/index.ts",
+  "type": "module",
+  "main": "./src/index.ts",
   "files": [
     "src"
   ],

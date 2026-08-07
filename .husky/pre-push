@@ -1,0 +1,2 @@
+# Lo que la CI va a comprobar igualmente, pero antes de gastar un runner.
+pnpm run typecheck && pnpm run test
