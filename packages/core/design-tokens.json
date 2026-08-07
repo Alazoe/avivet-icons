@@ -1,6 +1,6 @@
 {
   "$comment": "AviVet Icons — unica fuente de verdad de los valores de presentacion. Ver ICON_SPEC.md seccion 3.",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "canvas": {
     "size": 64,
     "padding": 4,
@@ -36,7 +36,9 @@
   },
   "budget": {
     "maxSegments": 18,
-    "maxBytes": 700
+    "maxBytes": 700,
+    "exceptionFactor": 2,
+    "$comment": "maxSegments/maxBytes son el techo por defecto y siguen apretando a los objetos. exceptionFactor es cuanto puede superarlo una receta que declare budget con su reason: solo la familia animals puede pedirlo."
   },
   "precision": 2,
   "sizes": {

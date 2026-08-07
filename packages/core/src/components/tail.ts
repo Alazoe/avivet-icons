@@ -12,12 +12,11 @@ import { draw, FACING } from '../geometry.ts';
 import type { PieceOptions, Shape, TailVariant, PenCommands } from '../types.ts';
 
 const VARIANTS: Record<string, PenCommands[]> = {
-  // Plumas cortas y poco abiertas: mas largas o mas separadas se leen como
-  // rayos de sol saliendo del cuerpo, no como cola.
+  // Plumas CERRADAS y afiladas, no tres rayas: es lo que les da volumen.
   hen: [
-    (p) => p.M(0, 0).C(-2.5, -2, -5.5, -4.5, -7.5, -8.5),
-    (p) => p.M(0, 1.5).C(-2.5, 0, -5.5, -1.5, -8, -4.5),
-    (p) => p.M(0, 3).C(-2.5, 2, -5.5, 1.5, -8, -0.5),
+    (p) => p.M(1, -4).C(-4, -8, -8, -15, -9, -22).C(-6, -17, -2, -11, 2, -7).Z(),
+    (p) => p.M(-0.5, 0).C(-6, -2, -9.5, -8, -10.5, -15).C(-7.5, -11, -3.5, -6, 1, -3).Z(),
+    (p) => p.M(-1, 4).C(-6.5, 3, -10.5, -1, -12, -6).C(-8.5, -4, -4, -1, 0, 1.5).Z(),
   ],
   chick: [(p) => p.M(0, 0).C(-3.5, -1.5, -5.5, -4, -6, -7.5)],
   rooster: [

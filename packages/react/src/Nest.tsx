@@ -1,5 +1,5 @@
 // GENERADO por scripts/build.ts — no editar a mano.
-// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.3.1
+// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.4.0
 import * as React from 'react';
 import type { IconProps } from './types';
 

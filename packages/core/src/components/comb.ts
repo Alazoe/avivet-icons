@@ -12,7 +12,11 @@ import type { CombSize, PieceOptions, Shape, PenCommands } from '../types.ts';
 
 const SIZES: Record<string, PenCommands> = {
   single: (p) =>
-    p.M(-4.5, 1.5).C(-5, -2.5, -1, -3, -1, 0.5).C(-1, -4, 3, -4, 3, 0).C(3, -2.5, 5, -2, 5, 1.5),
+    p
+      .M(-6, 1.5)
+      .C(-6, -4, -2, -4.5, -2, 0)
+      .C(-2, -5.5, 2.5, -6, 2.5, -1)
+      .C(2.5, -5, 6, -4, 5.5, 1.5),
 
   big: (p) =>
     p

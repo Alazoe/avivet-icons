@@ -12,17 +12,22 @@ const VARIANTS: Record<string, { segments: CubicSegment[]; anchors: Partial<Anch
   // y el pecho; la segunda, el vientre y el flanco hasta la base de la cola.
   // Menos curvas y mejor puestas: es lo que separa un contorno tecnico de uno
   // dibujado a ojo.
+  // Cuatro tramos: cuello frontal · pecho y vientre · grupa · flanco. El cuello
+  // frontal sale de la garganta con la MISMA tangente con que llega HEAD: ahi
+  // estaba el pliegue anguloso que delataba el dibujo.
   adult: {
     segments: [
-      [13, -1, 8, 16, -2, 18], // garganta -> cuello frontal -> pecho -> vientre
-      [-13, 18, -21, 10, -20, -1], // vientre -> flanco -> base de cola
+      [13, -3, 12, -1, 13, 2], // garganta -> cuello frontal
+      [16, 10, 10, 18, 1, 19], // pecho -> vientre
+      [-8, 20, -14, 17, -15, 12], // vientre -> grupa
+      [-16, 7, -18, 2, -17, -1], // grupa -> flanco -> base de cola
     ],
     anchors: {
-      wing: { x: -14, y: 8 },
-      tail: { x: -18, y: -2 },
+      wing: { x: -11, y: 10 },
+      tail: { x: -16, y: 0 },
       legs: [
-        { x: -6.7, y: 17.5 },
-        { x: 2.4, y: 16.7 },
+        { x: -3.5, y: 19 },
+        { x: 6, y: 17.5 },
       ],
     },
   },

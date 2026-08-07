@@ -17,5 +17,5 @@ export const fits = (gap: number): boolean => gap >= tokens.stroke.minGap;
 export default function wattle({ at, scale = 1 }: PieceOptions): Shape[] {
   // Una sola curva mas la linea de cierre: el borde interno de la barbilla es
   // recto contra el cuello, asi que gastar una segunda curva en el no aporta.
-  return [draw({ at, scale, flip: FACING }, (p) => p.M(0, 2.5).C(3.5, 5, 3.5, 9.5, 0.5, 10).Z())];
+  return [draw({ at, scale, flip: FACING }, (p) => p.M(0.5, 2.5).C(3, 4.5, 2.5, 8, 0, 7.5).Z())];
 }

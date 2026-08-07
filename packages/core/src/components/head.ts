@@ -19,16 +19,19 @@ const VARIANTS: Record<
   { start: [number, number]; segments: CubicSegment[]; anchors: Partial<Anchors> }
 > = {
   // Hy-Line Brown: craneo redondeado, cabeza proporcionada, sin exagerar.
+  // Hy-Line Brown: craneo redondeado y mejilla. Las tangentes se empalman con
+  // BODY en la garganta, para que el cuello no haga pliegue.
   adult: {
-    start: [6, -12],
+    start: [8, -16],
     segments: [
-      [8, -20, 18, -20, 20, -13], // nuca -> craneo CONVEXO -> cara
-      [20, -9, 16, -8, 11, -8], // cara -> mejilla -> garganta
+      [13, -21, 19, -18, 21, -10], // nuca -> craneo -> cara
+      [21, -7, 19, -5, 16, -4], // cara -> mejilla -> garganta
     ],
     anchors: {
-      crown: { x: 13, y: -19 },
-      beak: { x: 19.5, y: -13 },
-      eye: { x: 15, y: -14.5 },
+      crown: { x: 14, y: -17 },
+      beak: { x: 20.5, y: -10 },
+      eye: { x: 14.5, y: -14 },
+      wattle: { x: 19.5, y: -9 },
     },
   },
   // El gallo lleva la cabeza mas alta y erguida, y el craneo algo mayor: es lo

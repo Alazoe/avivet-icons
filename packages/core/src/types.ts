@@ -67,6 +67,8 @@ export type PenCommands = (pen: Pen) => Pen;
 export interface Anchors {
   crown: Point;
   beak: Point;
+  /** Donde cuelga la barbilla. Solo la declaran las aves que la llevan. */
+  wattle?: Point;
   eye: Point;
   wing: Point;
   tail: Point;
@@ -87,7 +89,7 @@ export interface Silhouette {
 
 export type BirdVariant = 'adult' | 'rooster' | 'chick';
 export type CombSize = 'single' | 'big' | 'pea' | 'tuft';
-export type WingVariant = 'simple' | 'adult' | 'chick';
+export type WingVariant = 'leaf' | 'simple' | 'adult' | 'chick';
 export type TailVariant = 'hen' | 'chick' | 'rooster';
 export type FootKind = 'splayed' | 'profile' | false;
 

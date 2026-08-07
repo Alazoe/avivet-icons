@@ -3,6 +3,40 @@
 Formato [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) ·
 versionado semántico sobre la superficie pública (`ICON_SPEC.md` §14).
 
+## [0.4.0] — 2026-08-07
+
+La gallina se redibuja al nivel de acabado de la lámina de referencia.
+
+### Cambiado
+
+- **`hen` redibujada: 17 → 32 segmentos.** Cuello con tramo propio, cresta de
+  tres lóbulos abiertos, barbilla, ala como hoja cerrada con nervadura, tres
+  plumas de cola cerradas y afiladas, y patas con pie de tres dedos.
+- **Nuevo token `budget.exceptionFactor` = 2.** El techo por defecto sigue en
+  18 y los nueve objetos siguen sometidos a él; lo que cambia es cuánto puede
+  superarlo una receta de `animals` que declare su `budget` con motivo:
+  antes 27, ahora 36. El 1.5 estaba escrito a mano dentro del test; ahora es un
+  token, que es donde vive un valor del sistema.
+- **`wing` gana la variante `leaf`**: hoja cerrada más nervadura.
+- **`tail` variante `hen`**: plumas cerradas en vez de tres trazos abiertos.
+- **`head` publica el ancla `wattle`**, para que la barbilla no se coloque a ojo.
+
+### Decisiones de dibujo
+
+- **El cuello necesita dos tramos de contorno, no uno.** Se probó con seis
+  tramos de silueta y con cinco: las dos veces la cabeza se apoyaba en los
+  hombros y salía un pato. Con ocho hay cuello.
+- **Las tangentes se empalman en la garganta.** El pliegue anguloso del cuello
+  venía de que HEAD llegaba con una dirección y BODY salía con otra.
+- **El ala lleva UNA nervadura, no tres.** Con `stroke.minGap` de 4 px, dentro
+  de un ala de 11 px de alto no caben dos líneas interiores.
+- **El pico NO se integra como vértice del contorno.** Se volvió a probar y
+  vuelve a salir una cuña del tamaño de la cara.
+- **Los objetos no se tocan.** Ninguno pasa de 18 segmentos; el aire es solo
+  para las aves, y el test lo hace cumplir.
+
+---
+
 ## [0.3.1] — 2026-08-06
 
 Documentación del sistema de diseño. **No se dibujaron iconos.**

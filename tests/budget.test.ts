@@ -17,7 +17,7 @@ import { loadIcons } from '../packages/core/src/registry.ts';
 import { body } from '../packages/core/src/emit.ts';
 
 const { icons } = await loadIcons();
-const { maxSegments, maxBytes } = tokens.budget;
+const { maxSegments, maxBytes, exceptionFactor } = tokens.budget;
 
 /** Segmentos de dibujo: todo comando salvo los desplazamientos y los cierres. */
 export const countSegments = (d: string): number =>
@@ -75,14 +75,14 @@ test('23 · el sprite completo cabe en una descarga razonable', () => {
 });
 
 describe('las excepciones de presupuesto estan acotadas', () => {
-  test('ninguna supera el limite global en mas de un 50 %', () => {
+  test('ninguna supera el limite global mas alla del factor de excepcion', () => {
     for (const icon of icons) {
       const declared = icon.budget?.maxSegments;
       if (!declared) continue;
       expect(
         declared,
-        `${icon.id}: ${declared} segmentos es demasiado incluso justificado`,
-      ).toBeLessThanOrEqual(maxSegments * 1.5);
+        `${icon.id}: ${declared} segmentos supera el factor de excepcion (${maxSegments} x ${exceptionFactor})`,
+      ).toBeLessThanOrEqual(maxSegments * exceptionFactor);
     }
   });
 
