@@ -6,10 +6,12 @@
  * (`convertPathData`) sin tocar nada que el contrato publico garantice.
  *
  * Lo que NO se le permite quitar:
- *   viewBox   -> el icono dejaria de escalar
- *   <title>   -> es la accesibilidad del archivo suelto (§12)
- *   role      -> idem
+ *   role      -> es la accesibilidad del archivo suelto (§12)
  *   los atributos de presentacion -> son el contrato con los tokens
+ *
+ * `viewBox` y `<title>` ya no hace falta protegerlos: desde SVGO 4 sus plugins
+ * salieron de preset-default. Declararlos aqui solo producia un aviso por
+ * icono en cada build.
  *
  * `floatPrecision` va atado a tokens.precision: si un dia se cambia la
  * precision, aqui no hay que acordarse de nada.
@@ -26,8 +28,6 @@ const config: Config = {
       name: 'preset-default',
       params: {
         overrides: {
-          removeViewBox: false,
-          removeTitle: false,
           removeUnknownsAndDefaults: false,
           removeUselessStrokeAndFill: false,
           convertShapeToPath: false,
