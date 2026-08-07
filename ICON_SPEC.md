@@ -12,6 +12,22 @@
 | Estado             | Vigente desde v0.1.0                           |
 | Licencia           | MIT                                            |
 
+## Cómo se reparte la documentación
+
+| Documento                                                              | De qué responde                                                                        |
+| ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| **`ICON_SPEC.md`** (este)                                              | El **contrato técnico**: arquitectura, build, tests, accesibilidad, versionado         |
+| [`docs/design/DESIGN_SYSTEM.md`](docs/design/DESIGN_SYSTEM.md)         | La **filosofía**: inspiración, estilo veterinario, objetivos, qué no hacer             |
+| [`docs/design/ICON_GUIDELINES.md`](docs/design/ICON_GUIDELINES.md)     | Las **reglas de dibujo**: lienzo, trazo, prohibiciones, presupuesto, errores conocidos |
+| [`docs/design/NAMING_CONVENTION.md`](docs/design/NAMING_CONVENTION.md) | Los **nombres**: idioma, formato, categorías, deprecación                              |
+| [`docs/design/DESIGN_TOKENS.md`](docs/design/DESIGN_TOKENS.md)         | Los **valores**: token por token, con su porqué                                        |
+
+Los cuatro de `docs/design/` son el sistema de diseño y se dirigen a quien
+**dibuja**. Este documento se dirige a quien **mantiene el repositorio**. Cuando
+se solapen, este manda y aquellos tienen un bug.
+
+---
+
 Este documento manda sobre cualquier otro archivo del repositorio. Si el código
 y la spec no coinciden, **el bug está en el código**. Toda decisión estructural
 se discute aquí antes de escribirse en `packages/`.
@@ -79,7 +95,6 @@ Consecuencias prácticas:
 avivet-icons/
 ├── ICON_SPEC.md              ← este documento: la fuente de verdad
 ├── CONTRIBUTING.md · README.md · CHANGELOG.md · LICENSE
-├── design-tokens.json        ← única fuente de valores de presentación
 ├── package.json              ← raíz privada: toolchain y scripts
 ├── pnpm-workspace.yaml
 ├── tsconfig.base.json · tsconfig.json
@@ -88,6 +103,7 @@ avivet-icons/
 │
 ├── packages/
 │   ├── core/                 @avivet/icons
+│   │   ├── design-tokens.json ← ÚNICA fuente de valores de presentación
 │   │   ├── src/
 │   │   │   ├── types.ts      ← el vocabulario del sistema
 │   │   │   ├── tokens.ts · geometry.ts · emit.ts · registry.ts · paths.ts
@@ -133,7 +149,7 @@ una decisión de arquitectura tomada a conciencia, no un accidente.
 Solo se editan a mano **cinco** cosas:
 
 ```
-design-tokens.json · packages/core/src/** · scripts/** · website/** · la documentación
+packages/core/design-tokens.json · packages/core/src/** · scripts/** · website/**
 ```
 
 Todo lo demás (`packages/*/svg`, `sprite`, `react`, `vue`, `docs`, `css`, `website/dist`)
@@ -144,7 +160,7 @@ Un PR que modifique un archivo generado sin modificar su fuente se rechaza.
 
 ## 3. Design tokens
 
-`design-tokens.json` es la **única** fuente de los valores de presentación.
+`packages/core/design-tokens.json` es la **única** fuente de los valores de presentación.
 Ningún `2`, ningún `"round"`, ningún `"currentColor"` se escribe dos veces en
 el repositorio.
 
@@ -664,7 +680,7 @@ pnpm version <major|minor|patch>    # 5. sube la versión y crea el tag
 git push --follow-tags             # 6. la CI publica los paquetes y el sitio
 ```
 
-`design-tokens.json`, el `package.json` raíz y el `CHANGELOG` deben declarar la
+`packages/core/design-tokens.json`, el `package.json` raíz y el `CHANGELOG` deben declarar la
 misma versión. Un test lo comprueba.
 
 ---

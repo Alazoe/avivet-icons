@@ -1,4 +1,4 @@
-<!-- GENERADO por scripts/build.ts — no editar a mano. ·  Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.3.0 -->
+<!-- GENERADO por scripts/build.ts — no editar a mano. ·  Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.3.1 -->
 <script setup lang="ts">
 withDefaults(defineProps<{ size?: number | string; title?: string }>(), { size: 24 });
 </script>

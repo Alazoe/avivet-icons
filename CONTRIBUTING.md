@@ -5,6 +5,15 @@ todo:
 
 > **No dibujamos iconos. Construimos componentes.**
 
+Antes de dibujar nada, lee el sistema de diseño:
+
+| Documento                                                | Qué te dice                           |
+| -------------------------------------------------------- | ------------------------------------- |
+| [DESIGN_SYSTEM.md](docs/design/DESIGN_SYSTEM.md)         | Cómo se ve un icono AviVet, y por qué |
+| [ICON_GUIDELINES.md](docs/design/ICON_GUIDELINES.md)     | Las reglas concretas de dibujo        |
+| [NAMING_CONVENTION.md](docs/design/NAMING_CONVENTION.md) | Cómo se llama tu icono                |
+| [DESIGN_TOKENS.md](docs/design/DESIGN_TOKENS.md)         | De dónde sale cada número             |
+
 Un icono nuevo casi nunca es geometría nueva: es una combinación nueva de piezas
 que ya existen. Antes de dibujar nada, abre
 [`ICON_SPEC.md` §5](ICON_SPEC.md#5-catálogo-de-componentes) y busca tu forma en
@@ -168,7 +177,7 @@ Si algo está mal ahí, el bug está en `packages/core/src/`, en
 
 ## Cambiar los tokens
 
-`design-tokens.json` afecta a **todos** los iconos a la vez. Un cambio ahí:
+`packages/core/design-tokens.json` afecta a **todos** los iconos a la vez. Un cambio ahí:
 
 - necesita un issue previo con la justificación,
 - es como mínimo una versión **minor** (`ICON_SPEC.md` §14),

@@ -9,7 +9,7 @@ export const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 
 export const paths = {
   root: ROOT,
-  tokens: join(ROOT, 'design-tokens.json'),
+  tokens: join(ROOT, 'packages/core/design-tokens.json'),
   icons: join(ROOT, 'packages/core/src/icons'),
   svg: join(ROOT, 'packages/core/svg'),
   sprite: join(ROOT, 'packages/sprite/sprite.svg'),

@@ -1,6 +1,6 @@
 {
   "$comment": "AviVet Icons — unica fuente de verdad de los valores de presentacion. Ver ICON_SPEC.md seccion 3.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "canvas": {
     "size": 64,
     "padding": 4,

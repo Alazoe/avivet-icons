@@ -22,12 +22,14 @@
       "import": "./dist/index.js"
     },
     "./svg/*": "./svg/*",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./design-tokens.json": "./design-tokens.json"
   },
   "files": [
     "dist",
     "svg",
-    "src"
+    "src",
+    "design-tokens.json"
   ],
   "sideEffects": false,
   "scripts": {

@@ -17,7 +17,7 @@
  * precision, aqui no hay que acordarse de nada.
  */
 import type { Config } from 'svgo';
-import tokens from './design-tokens.json' with { type: 'json' };
+import tokens from './packages/core/design-tokens.json' with { type: 'json' };
 
 const config: Config = {
   multipass: true,

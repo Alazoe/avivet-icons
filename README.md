@@ -12,6 +12,7 @@ Iconos SVG de dibujo técnico para medicina veterinaria y producción avícola.
 [![Node ≥ 20](https://img.shields.io/badge/node-%E2%89%A5%2020-1D5C8F)](package.json)
 
 [Ver la biblioteca](https://avivet.cl/avivet-icons/) ·
+[Sistema de diseño](docs/design/DESIGN_SYSTEM.md) ·
 [Especificación](ICON_SPEC.md) ·
 [Contribuir](CONTRIBUTING.md) ·
 [Changelog](CHANGELOG.md)
@@ -72,8 +73,20 @@ sistema.
 | Color       | `currentColor` — nunca un color fijo             |
 | Curvas      | Bézier; las quiebras solo si son anatómicas      |
 
-Todos viven en [`design-tokens.json`](design-tokens.json). Las reglas completas,
-en [`ICON_SPEC.md`](ICON_SPEC.md).
+Todos viven en
+[`packages/core/design-tokens.json`](packages/core/design-tokens.json).
+
+**El sistema de diseño está documentado en [`docs/design/`](docs/design/):**
+
+| Documento                                                | Para qué                                                        |
+| -------------------------------------------------------- | --------------------------------------------------------------- |
+| [DESIGN_SYSTEM.md](docs/design/DESIGN_SYSTEM.md)         | Filosofía, inspiración, estilo veterinario, qué no hacer        |
+| [ICON_GUIDELINES.md](docs/design/ICON_GUIDELINES.md)     | Reglas de dibujo, prohibiciones, presupuesto, errores conocidos |
+| [NAMING_CONVENTION.md](docs/design/NAMING_CONVENTION.md) | Nombres, categorías, keywords, deprecación                      |
+| [DESIGN_TOKENS.md](docs/design/DESIGN_TOKENS.md)         | Cada token, con su porqué                                       |
+
+El contrato técnico del repositorio —build, tests, versionado— es
+[`ICON_SPEC.md`](ICON_SPEC.md).
 
 ---
 
@@ -190,8 +203,9 @@ como ESM más `.d.ts`, y el resto son archivos estáticos.
 ### Estructura
 
 ```text
-design-tokens.json          ← valores de presentación (única fuente)
-packages/core/src/
+packages/core/
+  design-tokens.json        ← valores de presentación (única fuente)
+  src/
   types.ts                  ← el vocabulario del sistema
   components/               ← EL LEGO: 21 piezas reutilizables
   icons/<categoría>/*.icon.ts   ← RECETAS: composición + metadatos

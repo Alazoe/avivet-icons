@@ -2,7 +2,7 @@
  * Carga design-tokens.json y lo congela.
  * Todo valor de presentacion del proyecto sale de aqui. Ver ICON_SPEC.md §3.
  */
-import raw from '../../../design-tokens.json' with { type: 'json' };
+import raw from '../design-tokens.json' with { type: 'json' };
 
 export type Tokens = typeof raw;
 

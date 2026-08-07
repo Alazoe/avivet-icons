@@ -1,5 +1,5 @@
 // GENERADO por scripts/build.ts — no editar a mano.
-// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.3.0
+// Fuente: packages/core/src + design-tokens.json · AviVet Icons v0.3.1
 export type { IconProps } from './types';
 export { Chick } from './Chick';
 export { Hen } from './Hen';

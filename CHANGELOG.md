@@ -3,6 +3,43 @@
 Formato [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/) ·
 versionado semántico sobre la superficie pública (`ICON_SPEC.md` §14).
 
+## [0.3.1] — 2026-08-06
+
+Documentación del sistema de diseño. **No se dibujaron iconos.**
+
+### Añadido
+
+- **`docs/design/DESIGN_SYSTEM.md`** — filosofía, las tres inspiraciones
+  (Feather, Lucide, Heroicons) con lo que se toma y dónde se diverge, el estilo
+  de lámina veterinaria, objetivos, qué no hacer y ejemplos reales de decisiones
+  tomadas mirando el render.
+- **`docs/design/ICON_GUIDELINES.md`** — lienzo, trazo, las trece
+  prohibiciones, presupuesto de complejidad con su reparto real, la regla de los
+  dos extremos, anatomía aviar y la tabla de errores conocidos.
+- **`docs/design/NAMING_CONVENTION.md`** — inglés, kebab-case, singular; cómo un
+  `id` genera cinco superficies; cómo elegir nombre; categorías y deprecación.
+- **`docs/design/DESIGN_TOKENS.md`** — token por token con su porqué, cómo llega
+  un token al SVG, qué **no** es token y cómo se cambia uno.
+
+### Cambiado
+
+- **`design-tokens.json` se muda a `packages/core/design-tokens.json`.** Es lo
+  que se publica con el paquete, así que ahí le corresponde estar. Se **movió**,
+  no se duplicó: dos archivos de tokens serían dos fuentes de verdad, que es
+  justo lo que prohíbe §3. Los 12 SVG salieron byte a byte idénticos.
+- `@avivet/icons` exporta ahora `./design-tokens.json`.
+- `ICON_SPEC.md`, `README.md` y `CONTRIBUTING.md` enlazan los cuatro documentos
+  en vez de repetirlos.
+
+### Decisiones
+
+- **La documentación se reparte por audiencia, no por tema.** `docs/design/` se
+  dirige a quien **dibuja**; `ICON_SPEC.md` a quien **mantiene el repositorio**.
+  Cuando se solapen, manda la especificación técnica. Sin esa jerarquía escrita,
+  dos documentos que dicen casi lo mismo divergen en tres meses.
+
+---
+
 ## [0.3.0] — 2026-08-06
 
 Reestructuración de la arquitectura del repositorio a monorepo pnpm con
